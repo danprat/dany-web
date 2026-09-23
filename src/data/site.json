@@ -1,0 +1,452 @@
+{
+  "profile": {
+    "name": "Dany Pratmanto",
+    "role": "Dosen & Software Developer",
+    "headline": "Solusi Digital yang Terstruktur. Riset Akademik yang Tuntas.",
+    "summary": "Dosen Teknologi Komputer & Software Developer. Merancang arsitektur sistem informasi yang handal untuk industri dan mendampingi riset komputasi yang terukur serta aplikatif.",
+    "institution": "Universitas Bina Sarana Informatika",
+    "department": "D3 Teknologi Komputer · Kampus Kota Tegal",
+    "sinta": "5990963",
+    "fields": ["Software Engineering", "Data Mining", "Text Analytics"],
+    "email": "pratmanto@gmail.com",
+    "whatsapp": "628974041777",
+    "whatsappPrefill": "Halo Pak Dany, saya ingin mendiskusikan kebutuhan proyek digital / konsultasi teknologi.",
+    "sintaUrl": "https://sinta.kemdikbud.go.id/authors/profile/5990963"
+  },
+  "navigation": [
+    {
+      "label": "Home",
+      "to": "/"
+    },
+    {
+      "label": "Portfolio",
+      "to": "/portfolio"
+    },
+    {
+      "label": "Services",
+      "to": "/services"
+    },
+    {
+      "label": "Materi",
+      "to": "/materi"
+    },
+    {
+      "label": "Articles",
+      "to": "/articles"
+    },
+    {
+      "label": "About",
+      "to": "/about"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "absen-sokawera",
+      "title": "Absen Sokawera",
+      "number": "01",
+      "category": "Sistem Informasi Manajemen",
+      "description": "Platform presensi berbasis web dengan validasi shift, rekapitulasi data otomatis, dan pemantauan kehadiran staf secara realtime.",
+      "url": "https://absen.sokawera.web.id/",
+      "image": "/projects/absen-sokawera.jpg",
+      "tags": ["Attendance", "Web Application", "Management"],
+      "accent": "blue",
+      "problem": "Pencatatan presensi manual rentan manipulasi, lambat direkap, dan memakan waktu administrasi harian yang signifikan.",
+      "architecture": "Aplikasi web responsif dengan integrasi workflow presensi, manajemen multi-shift, validasi data realtime, dan dashboard eksekutif.",
+      "stack": ["Modern Web Stack", "Realtime Attendance", "Data Management", "Role-based Access"],
+      "impact": "Mengotomatisasi rekap kehadiran bulanan, memangkas waktu administrasi hingga 80%, dan memastikan transparansi data presensi staf."
+    },
+    {
+      "slug": "kilathost",
+      "title": "KilatHost",
+      "number": "02",
+      "category": "Cloud & Web Infrastructure",
+      "description": "Platform layanan hosting, domain, dan infrastruktur web dengan katalog produk terstruktur serta alur pemesanan cepat.",
+      "url": "https://kilathost.my.id/",
+      "image": "/projects/kilathost.jpg",
+      "tags": ["Cloud Hosting", "Infrastructure", "Web Platform"],
+      "accent": "lime",
+      "problem": "Calon pengguna membutuhkan portal yang jelas untuk memilih spesifikasi server, paket hosting, dan proses registrasi domain tanpa hambatan teknis.",
+      "architecture": "Platform web performa tinggi dengan penyusunan katalog spesifikasi komputasi, kalkulator paket layanan, dan alur konversi pemesanan yang ringkas.",
+      "stack": [
+        "Cloud Architecture",
+        "Service Catalogue",
+        "Domain Integration",
+        "High Availability"
+      ],
+      "impact": "Menyajikan akses informasi hosting yang transparan, mempercepat onboarding pelanggan baru, dan memperkuat kredibilitas brand infrastruktur digital."
+    },
+    {
+      "slug": "ert-press",
+      "title": "ERT Press",
+      "number": "03",
+      "category": "Digital Publishing Platform",
+      "description": "Portal resmi penerbitan ilmiah dan buku digital dengan alur pengajuan naskah, katalog ber-ISBN, dan standardisasi publikasi terpercaya.",
+      "url": "https://ertpress.web.id/",
+      "image": "/projects/ert-press.jpg",
+      "tags": ["Publishing", "Editorial", "Web Portal"],
+      "accent": "coral",
+      "problem": "Penulis dan institusi membutuhkan titik rujukan resmi yang kredibel untuk memahami alur penerbitan, perolehan ISBN, dan melihat katalog buku yang diterbitkan.",
+      "architecture": "Portal informasi publikasi dengan arsitektur konten berlapis: panduan penulis, penelusuran katalog terbitan terindeks, dan formulir pengajuan naskah.",
+      "stack": ["Publishing Portal", "Content Architecture", "ISBN Catalogue", "Author Workflow"],
+      "impact": "Meningkatkan kepercayaan mitra penulis, mempermudah verifikasi legalitas buku, dan mendigitalisasi distribusi informasi penerbitan secara profesional."
+    },
+    {
+      "slug": "ojs-jurnal-ilmiah",
+      "title": "OJS Jurnal Ilmiah",
+      "number": "04",
+      "category": "Academic Publishing Platform",
+      "description": "Implementasi dan optimasi platform Open Journal Systems untuk tata kelola penerbitan artikel ilmiah bereputasi.",
+      "url": "https://ojs.jurnal-ilmiah.com/index.php/index/en",
+      "image": "/projects/ojs-jurnal-ilmiah.jpg",
+      "tags": ["Open Journal Systems", "Academic Publishing", "Peer Review"],
+      "accent": "violet",
+      "problem": "Pengelolaan jurnal berkala memerlukan sistem terstandar yang memenuhi regulasi akreditasi: alur naskah tertib, rekam jejak telaah jelas, dan akses daring terbuka.",
+      "architecture": "Penerapan OJS multi-role yang memisahkan alur kerja Penulis, Editor, Reviewer, dan Pembaca dengan dukungan metadata OAI-PMH serta pengarsipan digital.",
+      "stack": [
+        "Open Journal Systems",
+        "Editorial Workflow",
+        "Metadata OAI-PMH",
+        "Blind Peer Review"
+      ],
+      "impact": "Mewujudkan alur review yang transparan dan akuntabel, mempermudah proses akreditasi jurnal, serta menjamin keterindeksan artikel di portal ilmiah nasional dan global."
+    },
+    {
+      "slug": "ujian-live",
+      "title": "Ujian Live",
+      "number": "05",
+      "category": "Education Technology",
+      "description": "Platform asesmen daring dengan timer sinkron, pengacakan butir soal, dan pemantauan pengerjaan ujian secara realtime.",
+      "url": "https://ujian-live.pages.dev/",
+      "image": "/projects/ujian-live.jpg",
+      "tags": ["EdTech", "Realtime Assessment", "Live Proctoring"],
+      "accent": "amber",
+      "problem": "Pelaksanaan ujian daring konvensional sering terkendala beban server bersamaan, potensi kecurangan, dan lambatnya koreksi hasil secara manual.",
+      "architecture": "Aplikasi asesmen responsif berbasis web dengan arsitektur sinkronisasi waktu presisi, enkripsi kunci jawaban, dan dasbor live monitoring untuk pengawas.",
+      "stack": ["Realtime Engine", "Assessment Workflow", "Anti-cheat Logic", "Instant Analytics"],
+      "impact": "Menjamin kelancaran sesi ujian serentak, menekan potensi kecurangan siswa, dan menyajikan laporan analitik nilai seketika setelah ujian selesai."
+    }
+  ],
+  "services": [
+    {
+      "number": "01",
+      "title": "Modern Web & Web Application",
+      "group": "Development",
+      "description": "Landing page berkonversi tinggi, company profile korporat, dan aplikasi web kustom yang dirancang cepat, responsif, dan mudah dikelola.",
+      "price": "Berdasarkan Ruang Lingkup",
+      "features": [
+        "Arsitektur modern & kode bersih",
+        "Optimal di perangkat mobile & desktop",
+        "Optimasi performa & SEO",
+        "Integrasi CMS dan database"
+      ]
+    },
+    {
+      "number": "02",
+      "title": "Sistem Informasi Manajemen",
+      "group": "Engineering",
+      "description": "Otomasi operasional bisnis dan institusi: dashboard eksekutif, sistem inventaris, presensi terpusat, dan integrasi alur kerja.",
+      "price": "Investasi Terukur",
+      "features": [
+        "Analisis alur proses bisnis",
+        "Manajemen hak akses & peran",
+        "Dashboard & pelaporan analitik",
+        "Dukungan deployment & pemeliharaan"
+      ]
+    },
+    {
+      "number": "03",
+      "title": "Bimbingan & Konsultasi Riset",
+      "group": "Academic",
+      "description": "Pendampingan skripsi, tugas akhir, dan riset komputasi berbasis data mining, text analytics, dan rekayasa perangkat lunak terapan.",
+      "price": "Sesi Privat / Mentoring Paket",
+      "features": [
+        "Perumusan masalah & metodologi",
+        "Implementasi algoritma & olah data",
+        "Validasi teknis & debugging sistem",
+        "Simulasi & persiapan sidang"
+      ]
+    },
+    {
+      "number": "04",
+      "title": "Konsultasi Teknologi & MVP",
+      "group": "Consultation",
+      "description": "Review arsitektur sistem, pemilihan tech-stack, cloud deployment/VPS, integrasi AI terapan, dan pengembangan produk minimum (MVP).",
+      "price": "Sesi Konsultasi Terjadwal",
+      "features": [
+        "Review arsitektur & skalabilitas",
+        "Strategi rilis MVP cepat & hemat",
+        "Konfigurasi server & cloud deployment",
+        "Audit kode & rekomendasi optimasi"
+      ]
+    }
+  ],
+  "courses": [
+    {
+      "slug": "cloud-computing",
+      "title": "Cloud Computing",
+      "semester": "Ganjil 2026",
+      "description": "Konsep komputasi awan, layanan, arsitektur, deployment, dan praktik implementasi.",
+      "count": 8,
+      "updated": "22 Sep 2026",
+      "sessions": [
+        {
+          "meeting": 8,
+          "title": "Deployment dan Monitoring",
+          "type": "Materi",
+          "updated": "22 Sep 2026",
+          "summary": "Membahas proses deployment aplikasi serta dasar monitoring layanan cloud."
+        },
+        {
+          "meeting": 7,
+          "title": "Container dan Orkestrasi",
+          "type": "PPT",
+          "updated": "15 Sep 2026",
+          "summary": "Pengenalan container, image, dan konsep orkestrasi."
+        },
+        {
+          "meeting": 6,
+          "title": "Model Layanan Cloud",
+          "type": "PDF",
+          "updated": "08 Sep 2026",
+          "summary": "Perbandingan IaaS, PaaS, dan SaaS dalam studi kasus praktis."
+        }
+      ]
+    },
+    {
+      "slug": "mobile-computing",
+      "title": "Mobile Computing",
+      "semester": "Ganjil 2026",
+      "description": "Dasar pengembangan aplikasi mobile, pola antarmuka, data, dan integrasi layanan.",
+      "count": 6,
+      "updated": "19 Sep 2026",
+      "sessions": [
+        {
+          "meeting": 6,
+          "title": "Integrasi API pada Aplikasi Mobile",
+          "type": "Materi",
+          "updated": "19 Sep 2026",
+          "summary": "Alur mengambil, menampilkan, dan menangani data dari layanan API."
+        },
+        {
+          "meeting": 5,
+          "title": "Penyimpanan Data Lokal",
+          "type": "Tugas",
+          "updated": "12 Sep 2026",
+          "summary": "Latihan memilih dan menerapkan penyimpanan data lokal."
+        }
+      ]
+    },
+    {
+      "slug": "arsitektur-komputer",
+      "title": "Arsitektur Komputer",
+      "semester": "Ganjil 2026",
+      "description": "Materi perkuliahan, presentasi, tugas, dan referensi arsitektur sistem komputer.",
+      "count": 12,
+      "updated": "18 Sep 2026",
+      "sessions": [
+        {
+          "meeting": 12,
+          "title": "Input / Output System",
+          "type": "PDF",
+          "updated": "18 Sep 2026",
+          "summary": "Memahami komunikasi perangkat I/O, interrupt, dan pengelolaan transfer data."
+        },
+        {
+          "meeting": 11,
+          "title": "Storage",
+          "type": "Referensi",
+          "updated": "11 Sep 2026",
+          "summary": "Konsep media penyimpanan dan hierarki storage."
+        }
+      ]
+    },
+    {
+      "slug": "pengantar-data-sains",
+      "title": "Pengantar Data Sains",
+      "semester": "Ganjil 2026",
+      "description": "Fondasi pengolahan data, eksplorasi, visualisasi, dan interpretasi hasil.",
+      "count": 5,
+      "updated": "10 Sep 2026",
+      "sessions": [
+        {
+          "meeting": 5,
+          "title": "Eksplorasi Data",
+          "type": "Materi",
+          "updated": "10 Sep 2026",
+          "summary": "Membaca pola awal data melalui statistik deskriptif dan visualisasi."
+        }
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "slug": "memulai-proyek-digital",
+      "title": "Memulai Proyek Digital dari Masalah yang Tepat",
+      "category": "Project Notes",
+      "date": "23 Sep 2026",
+      "readTime": "6 menit",
+      "excerpt": "Sebelum memilih teknologi, pastikan masalah, pengguna, dan ukuran keberhasilan sudah cukup jelas.",
+      "content": [
+        {
+          "heading": "Mulai dari masalah, bukan teknologi",
+          "paragraphs": [
+            "Proyek digital yang sehat tidak dimulai dari pertanyaan framework apa yang akan dipakai. Ia dimulai dari masalah siapa yang ingin diselesaikan, seberapa sering masalah itu terjadi, dan apa akibatnya jika dibiarkan.",
+            "Tuliskan masalah dalam satu kalimat yang menyebut pengguna, situasi, dan hambatan. Kalimat ini menjadi pagar agar diskusi tidak terlalu cepat berubah menjadi daftar fitur."
+          ]
+        },
+        {
+          "heading": "Kenali pengguna dan alur hari ini",
+          "paragraphs": [
+            "Sebelum merancang solusi, lihat bagaimana pekerjaan dilakukan saat ini. Catat langkah yang berulang, perpindahan data, keputusan penting, serta titik yang paling sering menimbulkan kesalahan."
+          ],
+          "bullets": [
+            "Siapa pengguna utama dan siapa yang menyetujui hasilnya?",
+            "Informasi apa yang masuk, diproses, dan perlu keluar?",
+            "Langkah mana yang paling memakan waktu atau rawan kesalahan?"
+          ]
+        },
+        {
+          "heading": "Tentukan ukuran keberhasilan",
+          "paragraphs": [
+            "Ukuran keberhasilan tidak harus rumit. Untuk tahap awal, pilih satu atau dua indikator yang dekat dengan masalah: waktu pengerjaan lebih singkat, kesalahan pencatatan berkurang, atau informasi lebih mudah ditemukan.",
+            "Dengan ukuran yang jelas, tim dapat memilih fitur yang benar-benar perlu dibuat dan menunda sisanya."
+          ]
+        },
+        {
+          "heading": "Bangun versi terkecil yang utuh",
+          "paragraphs": [
+            "Versi awal harus cukup kecil untuk diselesaikan, tetapi tetap utuh untuk dipakai dari awal sampai akhir. Setelah digunakan oleh pengguna nyata, catatan dan umpan balik menjadi dasar iterasi berikutnya—bukan sekadar asumsi tim."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "arsitektur-mvp",
+      "title": "Arsitektur MVP yang Tidak Berlebihan",
+      "category": "Technology",
+      "date": "23 Sep 2026",
+      "readTime": "8 menit",
+      "excerpt": "Cara menjaga fondasi teknis tetap sehat tanpa membangun sistem yang terlalu kompleks di tahap awal.",
+      "content": [
+        {
+          "heading": "MVP bukan sistem asal jadi",
+          "paragraphs": [
+            "Minimum Viable Product adalah versi terkecil yang mampu menguji nilai utama sebuah produk. “Minimum” membatasi ruang lingkup, sedangkan “viable” menuntut alur inti tetap dapat digunakan dengan baik.",
+            "Karena itu, arsitektur MVP seharusnya sederhana tetapi tidak ceroboh. Fondasinya perlu mudah dipahami, diuji, dan diubah ketika temuan pengguna mulai masuk."
+          ]
+        },
+        {
+          "heading": "Mulai dari satu alur utama",
+          "paragraphs": [
+            "Pilih satu perjalanan pengguna yang paling menentukan. Contohnya: pengguna mendaftar, membuat permintaan, lalu melihat status. Bangun alur itu sampai selesai sebelum menambah dashboard, automasi, atau integrasi pendukung."
+          ],
+          "bullets": [
+            "Satu aplikasi lebih mudah dikelola daripada banyak layanan terpisah.",
+            "Satu sumber data mengurangi sinkronisasi yang belum diperlukan.",
+            "Aturan bisnis ditempatkan dekat dengan proses yang menggunakannya."
+          ]
+        },
+        {
+          "heading": "Pisahkan berdasarkan tanggung jawab",
+          "paragraphs": [
+            "Sederhana bukan berarti semua logika diletakkan pada satu halaman. Pisahkan tampilan, aturan bisnis, dan akses data agar perubahan pada satu bagian tidak merusak bagian lain. Pemisahan ini cukup dilakukan di dalam satu aplikasi; belum perlu memecahnya menjadi microservices."
+          ]
+        },
+        {
+          "heading": "Pilih teknologi yang sudah dikuasai",
+          "paragraphs": [
+            "Untuk MVP, kecepatan belajar tentang pengguna lebih penting daripada mencoba sebanyak mungkin teknologi baru. Gunakan perangkat yang tim pahami, memiliki dokumentasi baik, dan mudah dijalankan pada lingkungan produksi.",
+            "Tambahkan antrean pesan, cache khusus, pencarian terpisah, atau layanan lain hanya ketika ada kebutuhan terukur—bukan karena kemungkinan kebutuhan di masa depan."
+          ]
+        },
+        {
+          "heading": "Siapkan batas minimum produksi",
+          "paragraphs": [
+            "Walaupun kecil, MVP tetap menangani pengguna dan data nyata. Beberapa batas tidak boleh ditunda."
+          ],
+          "bullets": [
+            "Validasi input dan pembatasan akses pada setiap operasi penting.",
+            "Pencatatan kesalahan agar masalah dapat ditelusuri.",
+            "Cadangan data dan cara pemulihan yang jelas.",
+            "Pengujian untuk alur utama serta pemantauan layanan dasar."
+          ]
+        },
+        {
+          "heading": "Kapan arsitektur perlu berkembang?",
+          "paragraphs": [
+            "Ubah arsitektur ketika data menunjukkan batas yang nyata: waktu respons memburuk, proses tertentu menghambat bagian lain, atau tim kesulitan merilis perubahan secara aman. Ukur dahulu, temukan sumber masalah, lalu ubah bagian yang memang perlu.",
+            "Arsitektur MVP yang baik bukan yang terlihat paling canggih, tetapi yang membantu tim mengirim nilai, belajar cepat, dan tetap punya ruang untuk bertumbuh."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "skripsi-sistem-informasi",
+      "title": "Menentukan Ruang Lingkup Skripsi Sistem Informasi",
+      "category": "Academic",
+      "date": "23 Sep 2026",
+      "readTime": "7 menit",
+      "excerpt": "Panduan praktis membatasi topik agar penelitian terukur dan dapat diselesaikan tepat waktu.",
+      "content": [
+        {
+          "heading": "Topik yang baik harus bisa selesai",
+          "paragraphs": [
+            "Topik skripsi sering terasa menarik karena luas: digitalisasi sekolah, sistem rumah sakit, atau kecerdasan buatan untuk pendidikan. Masalahnya, topik luas sulit diterjemahkan menjadi pertanyaan penelitian, data, dan produk yang dapat selesai dalam satu periode akademik.",
+            "Ruang lingkup yang tepat bukan membuat penelitian menjadi kecil nilainya. Justru batas yang jelas membuat argumen, metode, dan hasil lebih kuat."
+          ]
+        },
+        {
+          "heading": "Gunakan empat batas utama",
+          "paragraphs": [
+            "Mulailah dengan membatasi siapa, proses apa, data apa, dan hasil apa yang akan dikaji."
+          ],
+          "bullets": [
+            "Pengguna: pilih satu kelompok utama, misalnya admin program studi.",
+            "Proses: fokus pada satu alur, misalnya pengajuan dan persetujuan surat.",
+            "Data: nyatakan jenis serta periode data yang tersedia.",
+            "Hasil: tentukan apakah keluaran berupa prototipe, implementasi, evaluasi, atau model analisis."
+          ]
+        },
+        {
+          "heading": "Uji kelayakan data sejak awal",
+          "paragraphs": [
+            "Jangan menunggu tahap implementasi untuk memastikan data tersedia. Tanyakan siapa pemilik data, apakah izin dapat diperoleh, bagaimana formatnya, dan apakah jumlahnya cukup untuk metode yang dipilih.",
+            "Jika data sensitif atau sulit diakses, ubah rancangan lebih awal. Proyek sederhana dengan data valid lebih kuat daripada metode kompleks yang bergantung pada data yang tidak pernah tersedia."
+          ]
+        },
+        {
+          "heading": "Selaraskan masalah, metode, dan evaluasi",
+          "paragraphs": [
+            "Setiap bagian harus membentuk satu garis logis. Jika masalahnya adalah lamanya proses administrasi, metode perlu menjelaskan bagaimana alur diperbaiki dan evaluasi perlu mengukur waktu, langkah, atau persepsi pengguna—bukan metrik yang tidak berkaitan."
+          ],
+          "bullets": [
+            "Rumusan masalah menyatakan hal yang ingin diketahui.",
+            "Metode menjelaskan cara memperoleh jawaban.",
+            "Implementasi menjadi alat atau objek yang diuji.",
+            "Evaluasi menunjukkan apakah tujuan tercapai."
+          ]
+        },
+        {
+          "heading": "Tanda ruang lingkup masih terlalu luas",
+          "paragraphs": [
+            "Waspadai daftar pengguna yang terlalu banyak, modul yang tidak saling bergantung, integrasi dengan banyak sistem, atau target penelitian sekaligus pengembangan produk penuh. Potong bagian yang tidak dibutuhkan untuk menjawab rumusan masalah.",
+            "Sebelum mulai, coba jelaskan penelitian dalam tiga kalimat: masalahnya, pendekatannya, dan bukti keberhasilannya. Jika belum jelas, ruang lingkup masih perlu dirapikan."
+          ]
+        },
+        {
+          "heading": "Penutup",
+          "paragraphs": [
+            "Skripsi yang baik tidak dinilai dari banyaknya fitur. Nilainya muncul dari masalah yang jelas, metode yang tepat, proses yang dapat dipertanggungjawabkan, dan hasil yang dapat dibaca secara objektif. Batas yang realistis adalah bagian penting dari kualitas penelitian."
+          ]
+        }
+      ]
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "Ruang untuk testimonial nyata akan ditampilkan di sini setelah tersedia.",
+      "name": "Belum dipublikasikan",
+      "role": "Data contoh UI"
+    }
+  ]
+}
