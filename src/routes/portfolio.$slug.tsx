@@ -38,7 +38,7 @@ export const Route = createFileRoute("/portfolio/$slug")({
 
 function ProjectPage() {
   const project = Route.useLoaderData();
-  const imageSrc = (project as { image?: string }).image || `/projects/${project.slug}.jpg`;
+  const imageSrc = (project as { image?: string }).image || `/projects/${project.slug}.webp`;
 
   return (
     <>

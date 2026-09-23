@@ -121,7 +121,7 @@ export function ProjectGrid({ limit }: { limit?: number }) {
   return (
     <div className="grid gap-8 md:grid-cols-2">
       {projects.map((project, index) => {
-        const imageSrc = (project as { image?: string }).image || `/projects/${project.slug}.jpg`;
+        const imageSrc = (project as { image?: string }).image || `/projects/${project.slug}.webp`;
         return (
           <article
             key={project.slug}
