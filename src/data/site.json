@@ -182,6 +182,24 @@
   ],
   "courses": [
     {
+      "slug": "logika-dan-algoritma",
+      "title": "Logika dan Algoritma",
+      "semester": "Ganjil 2026",
+      "description": "Konsep dasar logika pemrograman, tahapan penyelesaian masalah, karakteristik algoritma, konstruksi runtunan, percabangan, perulangan, dan notasi pseudocode.",
+      "count": 1,
+      "updated": "23 Sep 2026",
+      "sessions": [
+        {
+          "meeting": 1,
+          "title": "Konsep Dasar Logika dan Algoritma",
+          "type": "Slide Interaktif",
+          "updated": "23 Sep 2026",
+          "summary": "Pengantar logika pemrograman, 5 pilar algoritma, tahapan problem solving, 5 syarat mutlak algoritma menurut Donald E. Knuth, 3 konstruksi dasar (sequence, selection, looping), dan notasi pseudocode standar.",
+          "slideUrl": "/slides/logika-dan-algoritma-p01.html"
+        }
+      ]
+    },
+    {
       "slug": "cloud-computing",
       "title": "Cloud Computing",
       "semester": "Ganjil 2026",
