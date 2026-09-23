@@ -95,7 +95,7 @@ function AboutPage() {
               </p>
             </div>
             <div className="rounded-xl border border-border/60 bg-card p-5 shadow-sm dark:bg-card/85">
-              <p className="eyebrow">SINTA ID Kemdikbud</p>
+              <p className="eyebrow">SINTA ID Kemdiktisaintek</p>
               <a
                 href={data.profile.sintaUrl}
                 target="_blank"

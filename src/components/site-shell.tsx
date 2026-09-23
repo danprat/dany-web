@@ -137,7 +137,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 rel="noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
-                SINTA Kemdikbud
+                SINTA Kemdiktisaintek
               </a>
               <a
                 href="https://github.com"
