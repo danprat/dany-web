@@ -16,8 +16,11 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MateriRouteImport } from './routes/materi'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ArticlesIndexRouteImport } from './routes/articles.index'
 import { Route as ArticlesSlugRouteImport } from './routes/articles.$slug'
+import { Route as MateriIndexRouteImport } from './routes/materi.index'
 import { Route as MateriSlugRouteImport } from './routes/materi.$slug'
+import { Route as PortfolioIndexRouteImport } from './routes/portfolio.index'
 import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -55,15 +58,30 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArticlesIndexRoute = ArticlesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ArticlesRoute,
+} as any)
 const ArticlesSlugRoute = ArticlesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => ArticlesRoute,
 } as any)
+const MateriIndexRoute = MateriIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MateriRoute,
+} as any)
 const MateriSlugRoute = MateriSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => MateriRoute,
+} as any)
+const PortfolioIndexRoute = PortfolioIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortfolioRoute,
 } as any)
 const PortfolioSlugRoute = PortfolioSlugRouteImport.update({
   id: '/$slug',
@@ -82,18 +100,21 @@ export interface FileRoutesByFullPath {
   '/articles/$slug': typeof ArticlesSlugRoute
   '/materi/$slug': typeof MateriSlugRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
+  '/articles/': typeof ArticlesIndexRoute
+  '/materi/': typeof MateriIndexRoute
+  '/portfolio/': typeof PortfolioIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/articles': typeof ArticlesRouteWithChildren
   '/contact': typeof ContactRoute
-  '/materi': typeof MateriRouteWithChildren
-  '/portfolio': typeof PortfolioRouteWithChildren
   '/services': typeof ServicesRoute
   '/articles/$slug': typeof ArticlesSlugRoute
   '/materi/$slug': typeof MateriSlugRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
+  '/articles': typeof ArticlesIndexRoute
+  '/materi': typeof MateriIndexRoute
+  '/portfolio': typeof PortfolioIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +128,9 @@ export interface FileRoutesById {
   '/articles/$slug': typeof ArticlesSlugRoute
   '/materi/$slug': typeof MateriSlugRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
+  '/articles/': typeof ArticlesIndexRoute
+  '/materi/': typeof MateriIndexRoute
+  '/portfolio/': typeof PortfolioIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,18 +145,21 @@ export interface FileRouteTypes {
     | '/articles/$slug'
     | '/materi/$slug'
     | '/portfolio/$slug'
+    | '/articles/'
+    | '/materi/'
+    | '/portfolio/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/articles'
     | '/contact'
-    | '/materi'
-    | '/portfolio'
     | '/services'
     | '/articles/$slug'
     | '/materi/$slug'
     | '/portfolio/$slug'
+    | '/articles'
+    | '/materi'
+    | '/portfolio'
   id:
     | '__root__'
     | '/'
@@ -145,6 +172,9 @@ export interface FileRouteTypes {
     | '/articles/$slug'
     | '/materi/$slug'
     | '/portfolio/$slug'
+    | '/articles/'
+    | '/materi/'
+    | '/portfolio/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -208,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/articles/': {
+      id: '/articles/'
+      path: '/'
+      fullPath: '/articles/'
+      preLoaderRoute: typeof ArticlesIndexRouteImport
+      parentRoute: typeof ArticlesRoute
+    }
     '/articles/$slug': {
       id: '/articles/$slug'
       path: '/$slug'
@@ -215,12 +252,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticlesSlugRouteImport
       parentRoute: typeof ArticlesRoute
     }
+    '/materi/': {
+      id: '/materi/'
+      path: '/'
+      fullPath: '/materi/'
+      preLoaderRoute: typeof MateriIndexRouteImport
+      parentRoute: typeof MateriRoute
+    }
     '/materi/$slug': {
       id: '/materi/$slug'
       path: '/$slug'
       fullPath: '/materi/$slug'
       preLoaderRoute: typeof MateriSlugRouteImport
       parentRoute: typeof MateriRoute
+    }
+    '/portfolio/': {
+      id: '/portfolio/'
+      path: '/'
+      fullPath: '/portfolio/'
+      preLoaderRoute: typeof PortfolioIndexRouteImport
+      parentRoute: typeof PortfolioRoute
     }
     '/portfolio/$slug': {
       id: '/portfolio/$slug'
@@ -234,10 +285,12 @@ declare module '@tanstack/react-router' {
 
 interface ArticlesRouteChildren {
   ArticlesSlugRoute: typeof ArticlesSlugRoute
+  ArticlesIndexRoute: typeof ArticlesIndexRoute
 }
 
 const ArticlesRouteChildren: ArticlesRouteChildren = {
   ArticlesSlugRoute: ArticlesSlugRoute,
+  ArticlesIndexRoute: ArticlesIndexRoute,
 }
 
 const ArticlesRouteWithChildren = ArticlesRoute._addFileChildren(
@@ -246,10 +299,12 @@ const ArticlesRouteWithChildren = ArticlesRoute._addFileChildren(
 
 interface MateriRouteChildren {
   MateriSlugRoute: typeof MateriSlugRoute
+  MateriIndexRoute: typeof MateriIndexRoute
 }
 
 const MateriRouteChildren: MateriRouteChildren = {
   MateriSlugRoute: MateriSlugRoute,
+  MateriIndexRoute: MateriIndexRoute,
 }
 
 const MateriRouteWithChildren =
@@ -257,10 +312,12 @@ const MateriRouteWithChildren =
 
 interface PortfolioRouteChildren {
   PortfolioSlugRoute: typeof PortfolioSlugRoute
+  PortfolioIndexRoute: typeof PortfolioIndexRoute
 }
 
 const PortfolioRouteChildren: PortfolioRouteChildren = {
   PortfolioSlugRoute: PortfolioSlugRoute,
+  PortfolioIndexRoute: PortfolioIndexRoute,
 }
 
 const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
