@@ -24,8 +24,8 @@ export function BrowserFrame({
 }) {
   const displayHost = url ? url.replace(/^https?:\/\//, "").replace(/\/.*$/, "") : "";
 
-  return (
-    <div className="group/frame overflow-hidden rounded-xl border border-border/70 bg-card shadow-md transition-all duration-300 group-hover:shadow-xl dark:shadow-black/30">
+  const frameContent = (
+    <div className="group/frame relative overflow-hidden rounded-xl border border-border/70 bg-card shadow-md transition-all duration-300 group-hover/card:shadow-xl group-hover/card:border-primary/40 dark:shadow-black/30">
       {/* Modern Browser Chrome / Top Bar */}
       <div className="flex h-9 items-center justify-between border-b border-border/60 bg-muted/60 px-3.5 backdrop-blur-sm">
         <div className="flex items-center gap-1.5">
@@ -34,9 +34,10 @@ export function BrowserFrame({
           <span className="size-2.5 rounded-full bg-emerald-400/80 dark:bg-emerald-500/70" />
         </div>
         {displayHost ? (
-          <div className="flex max-w-[68%] items-center gap-1.5 truncate rounded-md bg-background/85 px-3 py-0.5 font-mono text-[11px] text-muted-foreground ring-1 ring-border/50 shadow-2xs">
+          <div className="flex max-w-[68%] items-center gap-1.5 truncate rounded-md bg-background/85 px-3 py-0.5 font-mono text-[11px] text-muted-foreground ring-1 ring-border/50 shadow-2xs transition-colors group-hover/card:text-primary">
             <Lock className="size-2.5 text-emerald-500 shrink-0" />
             <span className="truncate">{displayHost}</span>
+            <ExternalLink className="size-2.5 shrink-0 opacity-60 group-hover/card:opacity-100" />
           </div>
         ) : category ? (
           <span className="font-mono text-[11px] text-muted-foreground">{category}</span>
@@ -50,13 +51,38 @@ export function BrowserFrame({
           src={src}
           alt={alt}
           loading="lazy"
-          className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover/frame:scale-[1.03]"
+          className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover/card:scale-[1.02]"
         />
         {/* Subtle glass overlay highlight */}
         <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/5 dark:ring-white/5" />
+
+        {/* Hover overlay hint */}
+        {url && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/25 opacity-0 backdrop-blur-2xs transition-opacity duration-200 group-hover/card:opacity-100">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-background/95 px-3.5 py-1.5 font-display text-xs font-semibold text-foreground shadow-lg ring-1 ring-border">
+              Kunjungi {displayHost} <ExternalLink className="size-3 text-primary" />
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
+
+  if (url) {
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        className="block cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
+        title={`Buka website ${displayHost} di tab baru`}
+      >
+        {frameContent}
+      </a>
+    );
+  }
+
+  return frameContent;
 }
 
 export function SectionHeading({
@@ -99,47 +125,76 @@ export function ProjectGrid({ limit }: { limit?: number }) {
         return (
           <article
             key={project.slug}
-            className={`group flex flex-col justify-between rounded-2xl border border-border/60 bg-card p-6 sm:p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-border hover:shadow-xl dark:bg-card/85 ${
+            className={`group/card flex flex-col justify-between rounded-2xl border border-border/60 bg-card p-6 sm:p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-border hover:shadow-xl dark:bg-card/85 ${
               index === 0 && !limit ? "md:col-span-2" : ""
             }`}
           >
             <div>
-              <Link to="/portfolio/$slug" params={{ slug: project.slug }} className="block">
-                <BrowserFrame
-                  src={imageSrc}
-                  alt={`Tangkapan layar proyek ${project.title}`}
-                  url={project.url}
-                  category={project.category}
-                />
-              </Link>
+              {/* Clickable browser frame to target live website */}
+              <BrowserFrame
+                src={imageSrc}
+                alt={`Tangkapan layar proyek ${project.title}`}
+                url={project.url}
+                category={project.category}
+              />
+
               <div className="mt-6 flex items-start justify-between gap-4">
                 <div>
                   <p className="eyebrow">{project.category}</p>
-                  <h3 className="mt-2 font-display text-2xl font-semibold transition-colors group-hover:text-primary">
+                  <h3 className="mt-2 font-display text-2xl font-semibold transition-colors hover:text-primary">
                     <Link to="/portfolio/$slug" params={{ slug: project.slug }}>
                       {project.title}
                     </Link>
                   </h3>
                 </div>
-                <Link
-                  to="/portfolio/$slug"
-                  params={{ slug: project.slug }}
-                  className="icon-link shrink-0"
-                  aria-label={`Detail proyek ${project.title}`}
+                {/* External link button */}
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-link shrink-0 text-muted-foreground hover:text-primary"
+                  aria-label={`Buka website ${project.title} di tab baru`}
+                  title={`Buka website ${project.title}`}
                 >
-                  <ArrowUpRight className="size-4" />
-                </Link>
+                  <ExternalLink className="size-4" />
+                </a>
               </div>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 {project.description}
               </p>
             </div>
-            <div className="mt-6 flex flex-wrap gap-2 border-t border-border/40 pt-4">
-              {project.tags.map((tag) => (
-                <span className="tag" key={tag}>
-                  {tag}
-                </span>
-              ))}
+
+            {/* Bottom bar with tags and action buttons */}
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-border/40 pt-4">
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span className="tag" key={tag}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="rounded-lg shadow-2xs font-semibold gap-1.5 text-xs"
+                >
+                  <a href={project.url} target="_blank" rel="noreferrer">
+                    Kunjungi Web <ExternalLink className="size-3.5" />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="rounded-lg text-xs font-semibold text-muted-foreground hover:text-foreground"
+                >
+                  <Link to="/portfolio/$slug" params={{ slug: project.slug }}>
+                    Detail <ArrowRight className="size-3.5" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </article>
         );
@@ -353,9 +408,9 @@ export function CourseCard({ course }: { course: (typeof data.courses)[number] }
 
 export function ExternalProjectLink({ url }: { url: string }) {
   return (
-    <Button asChild size="lg" className="rounded-xl">
+    <Button asChild size="lg" className="rounded-xl font-semibold gap-2">
       <a href={url} target="_blank" rel="noreferrer">
-        Kunjungi website <ExternalLink className="size-4" />
+        Kunjungi Website Langsung <ExternalLink className="size-4" />
       </a>
     </Button>
   );
