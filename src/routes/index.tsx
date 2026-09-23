@@ -208,7 +208,7 @@ function HomePage() {
           {/* Semi-formal photo with natural lighting and rounded modern frame */}
           <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card shadow-xl transition-transform duration-300 hover:scale-[1.01]">
             <img
-              src={profileImage.url}
+              src={profileImage.url || "/foto-profil-dany.jpg"}
               alt="Dany Pratmanto"
               loading="lazy"
               className="aspect-[4/5] w-full object-cover object-top contrast-[1.02] brightness-[1.01]"
