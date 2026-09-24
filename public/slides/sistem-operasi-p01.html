@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="minimal-white">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>328 · Sistem Operasi — Pertemuan 1: Konsep Dasar &amp; Sejarah Perkembangan</title>
+<link rel="stylesheet" href="/slides/assets/fonts.css">
+<link rel="stylesheet" href="/slides/assets/base.css">
+<link rel="stylesheet" id="theme-link" href="/slides/assets/themes/minimal-white.css">
+<link rel="stylesheet" href="/slides/assets/animations/animations.css">
+<style>
+/* =========================================================
+   PROJECTOR-OPTIMIZED CLEAN DESIGN SYSTEM
+   High contrast, clear typography hierarchy, spacious layouts
+   ========================================================= */
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text-1: #0f172a; /* Slate 900 for razor-sharp readability */
+  --text-2: #334155; /* Slate 700 for clear body text */
+  --text-3: #64748b; /* Slate 500 for secondary badges/notes */
+  --accent: #1d4ed8; /* Blue 700 for high projector contrast */
+  --accent-soft: #eff6ff;
+  --accent-ink: #ffffff;
+  --good: #059669;
+  --good-soft: #ecfdf5;
+  --warn: #d97706;
+  --warn-soft: #fffbeb;
+  --bad: #dc2626;
+  --bad-soft: #fef2f2;
+  --purple: #7c3aed;
+  --purple-soft: #f5f3ff;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+}
+
+body {
+  background: #ffffff !important;
+  color: var(--text-1) !important;
+  font-family: var(--font-sans) !important;
+}
+
+.deck {
+  background: #ffffff !important;
+}
+
+.slide {
+  padding: 70px 96px !important;
+  justify-content: flex-start !important;
+  background: #ffffff !important;
+}
+
+/* Typography Scale for Projectors */
+.kicker {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: var(--accent) !important;
+  margin-bottom: 12px !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.h1 {
+  font-size: 56px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.025em !important;
+  color: var(--text-1) !important;
+  margin: 0 0 16px 0 !important;
+}
+
+.h2 {
+  font-size: 42px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--text-1) !important;
+  margin: 0 0 24px 0 !important;
+}
+
+.h3 {
+  font-size: 25px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  color: var(--text-1) !important;
+  margin: 0 0 10px 0 !important;
+}
+
+.h4 {
+  font-size: 21px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  color: var(--text-1) !important;
+  margin: 0 0 8px 0 !important;
+}
+
+.lede {
+  font-size: 23px !important;
+  line-height: 1.55 !important;
+  color: var(--text-2) !important;
+  font-weight: 400 !important;
+}
+
+p, li {
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+strong {
+  color: var(--text-1);
+  font-weight: 700;
+}
+
+/* High Contrast Modern Cards */
+.card-clean {
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 26px 30px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card-clean:hover {
+  transform: translateY(-3px);
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.card-clean.accent-card {
+  border-top: 4px solid var(--accent);
+}
+
+.card-clean.good-card {
+  border-top: 4px solid var(--good);
+}
+
+.card-clean.purple-card {
+  border-top: 4px solid var(--purple);
+}
+
+.card-clean.warn-card {
+  border-top: 4px solid var(--warn);
+}
+
+/* Minimalist Pill Badges */
+.pill-clean {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  width: fit-content;
+  border: 1px solid rgba(29, 78, 216, 0.15);
+}
+
+.pill-clean.gray { background: #f1f5f9; color: #334155; border-color: #e2e8f0; }
+.pill-clean.emerald { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+.pill-clean.amber { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+.pill-clean.red { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+.pill-clean.purple { background: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
+
+/* Large Number / Stat Blocks */
+.stat-clean {
+  font-size: 52px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  color: var(--accent);
+  margin: 6px 0 10px 0;
+  letter-spacing: -0.03em;
+}
+
+/* Clean Terminal Box */
+.terminal-clean {
+  background: #0f172a;
+  color: #f8fafc;
+  border-radius: 12px;
+  padding: 18px 24px;
+  font-family: var(--font-mono);
+  font-size: 17px;
+  line-height: 1.6;
+  border: 1px solid #1e293b;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.terminal-clean .prompt { color: #38bdf8; font-weight: 600; }
+.terminal-clean .cmd { color: #f1f5f9; font-weight: 600; }
+.terminal-clean .comment { color: #64748b; font-style: italic; }
+.terminal-clean .hl { color: #4ade80; }
+
+/* Comparison Tables */
+.table-clean {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  font-size: 18px;
+}
+
+.table-clean th {
+  background: #f8fafc;
+  color: var(--text-1);
+  font-weight: 700;
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1.5px solid var(--border);
+}
+
+.table-clean td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+  vertical-align: top;
+}
+
+.table-clean tr:last-child td {
+  border-bottom: none;
+}
+
+.table-clean tr:nth-child(even) td {
+  background: #fafafa;
+}
+
+/* Architectural Box Diagram */
+.arch-box {
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.arch-box.active {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+}
+
+.arch-box.dark {
+  background: #0f172a;
+  border-color: #1e293b;
+  color: #ffffff;
+}
+
+/* Deck Chrome (Footer & Progress) */
+.deck-footer {
+  font-size: 14px !important;
+  color: var(--text-3) !important;
+  border-top: 1px solid #f1f5f9 !important;
+  padding-top: 16px !important;
+  left: 96px !important;
+  right: 96px !important;
+  bottom: 30px !important;
+}
+
+.slide-number {
+  color: var(--text-1) !important;
+  font-weight: 700 !important;
+}
+
+/* Keyboard hint tag */
+kbd {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 14px;
+  font-family: var(--font-mono);
+  color: #0f172a;
+}
+
+/* Top-Right Lecturer Corner Badge */
+.deck-lecturer-corner {
+  position: absolute;
+  top: 26px;
+  right: 96px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid var(--border);
+  padding: 8px 18px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  backdrop-filter: blur(8px);
+  pointer-events: auto;
+  transition: all 0.25s ease;
+}
+
+.deck-lecturer-corner:hover {
+  border-color: var(--accent);
+  box-shadow: 0 6px 18px rgba(29, 78, 216, 0.12);
+  transform: translateY(-2px);
+}
+
+.deck-lecturer-corner .lecturer-icon {
+  font-size: 18px;
+}
+
+.deck-lecturer-corner .lecturer-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.deck-lecturer-corner .lecturer-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+/* Interactive Quiz Components */
+.quiz-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+
+.quiz-options {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin-top: 14px !important;
+}
+
+.quiz-opt {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  padding: 11px 16px !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  cursor: pointer !important;
+  font-size: 17px !important;
+  font-family: var(--font-sans) !important;
+  text-align: left !important;
+  color: var(--text-1) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  user-select: none !important;
+}
+
+.quiz-opt:hover:not(:disabled) {
+  border-color: var(--accent) !important;
+  background: #eff6ff !important;
+  transform: translateX(4px) !important;
+}
+
+.opt-badge {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 7px !important;
+  background: #f1f5f9 !important;
+  color: var(--text-2) !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.quiz-opt:hover:not(:disabled) .opt-badge {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+.quiz-opt.opt-correct {
+  border-color: #10b981 !important;
+  border-width: 2px !important;
+  background: #ecfdf5 !important;
+  color: #047857 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
+}
+
+.quiz-opt.opt-correct .opt-badge {
+  background: #059669 !important;
+  color: #ffffff !important;
+}
+
+.quiz-opt.opt-wrong {
+  border-color: #ef4444 !important;
+  border-width: 2px !important;
+  background: #fef2f2 !important;
+  color: #b91c1c !important;
+  animation: quizShake 0.35s ease !important;
+}
+
+.quiz-opt.opt-wrong .opt-badge {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+@keyframes quizShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.opt-text {
+  flex: 1 !important;
+  font-weight: 600 !important;
+}
+
+.opt-status {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+}
+
+.quiz-feedback {
+  margin-top: 10px !important;
+  min-height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.quiz-explanation {
+  margin-top: 12px !important;
+  padding: 14px 18px !important;
+  background: #f8fafc !important;
+  border-radius: 10px !important;
+  border-left: 4px solid #059669 !important;
+  font-size: 16px !important;
+  line-height: 1.55 !important;
+  color: var(--text-2) !important;
+  display: none;
+  animation: quizFadeIn 0.3s ease !important;
+}
+
+@keyframes quizFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quiz-reset-btn {
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 6px !important;
+  color: var(--text-2) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  padding: 5px 12px !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.quiz-reset-btn:hover {
+  background: var(--accent-soft) !important;
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+</style>
+</head>
+<body data-themes="minimal-white,corporate-clean,blueprint,tokyo-night,catppuccin-mocha" data-theme-base="/slides/assets/themes/">
+<div class="deck">
+
+  <!-- Pojok Kanan Atas: Nama Dosen Pengampu -->
+  <div class="deck-lecturer-corner">
+    <span class="lecturer-icon">👨‍🏫</span>
+    <span class="lecturer-label">Dosen:</span>
+    <span class="lecturer-name">Dany Pratmanto M.Kom</span>
+  </div>
+
+  <!-- =========================================================
+       SLIDE 1: COVER
+       ========================================================= -->
+  <section class="slide" data-title="Cover">
+    <div style="margin-top:40px;">
+      <p class="kicker" data-anim="fade-down">
+        <span>⚡</span> Program Studi S1 Informatika · Pertemuan 1 · Kode Mata Kuliah: 328
+      </p>
+      <h1 class="h1" data-anim="rise-in" style="font-size:62px!important;max-width:24ch;margin-bottom:20px!important;">
+        Konsep Dasar &amp; Sejarah Perkembangan Sistem Operasi
+      </h1>
+      <p class="lede" data-anim="fade-up" style="max-width:54ch;margin-bottom:36px;">
+        Membedah arsitektur dasar sistem komputer, 5 pilar manajemen sumber daya, dual-mode kernel, serta garis waktu evolusi dari batch system hingga cloud native.
+      </p>
+
+      <div class="anim-stagger-list" style="display:flex;gap:14px;flex-wrap:wrap;">
+        <span class="pill-clean" style="font-size:16px;padding:8px 20px;">🖥️ Sistem Operasi (328)</span>
+        <span class="pill-clean purple" style="font-size:16px;padding:8px 20px;">🚀 Model Project-Based Learning (PBL)</span>
+        <span class="pill-clean emerald" style="font-size:16px;padding:8px 20px;">🐧 Target: Linux Web Server Production</span>
+        <span class="pill-clean gray" style="font-size:16px;padding:8px 20px;">🏛️ Universitas Bina Sarana Informatika</span>
+      </div>
+
+      <div style="margin-top:28px;">
+        <div style="display:inline-flex;align-items:center;gap:12px;background:#f8fafc;border:1.5px solid var(--border);padding:10px 22px;border-radius:12px;">
+          <span style="font-size:22px;">👨‍🏫</span>
+          <div>
+            <span style="font-size:13px;color:var(--text-3);text-transform:uppercase;font-weight:600;display:block;">Dosen Pengampu:</span>
+            <span style="font-size:19px;color:var(--text-1);font-weight:800;">Dany Pratmanto M.Kom</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Sistem Operasi (328) · Pertemuan 1: Konsep Dasar &amp; Sejarah Perkembangan</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p><strong>Selamat datang rekan-rekan mahasiswa pada kuliah perdana Sistem Operasi (Kode MK: 328).</strong></p>
+      <p>Hari ini kita mengawali fondasi fundamental ilmu komputer: bagaimana sebuah software berinteraksi langsung dengan silikon hardware (CPU, RAM, Storage, Bus I/O).</p>
+      <p>Mata kuliah ini menggunakan model <strong>Project-Based Learning (PBL)</strong>. Jadi seluruh teori yang kita pelajari di 7 pertemuan pertama akan menjadi bekal konkret saat rekan-rekan membangun Web Server Linux di paruh kedua semester.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 2: KONTRAK PERKULIAHAN & SKEMA PBL
+       ========================================================= -->
+  <section class="slide" data-title="Skema PBL 16 Pertemuan">
+    <p class="kicker" data-anim="fade-down"><span>📋</span> Kontrak Perkuliahan &amp; Rancangan Pembelajaran</p>
+    <h2 class="h2" data-anim="fade-up">Rencana 16 Pertemuan: Berbasis Proyek Nyata (PBL)</h2>
+
+    <div class="grid g3" style="gap:24px;margin-top:10px;">
+      <div class="card-clean accent-card" data-anim="fade-up">
+        <span class="pill-clean" style="margin-bottom:12px;">FASE 1 · TEORI FONDASI</span>
+        <h3 class="h3">Pertemuan 1 – 7</h3>
+        <p style="margin-bottom:12px;">Pemahaman konseptual dan arsitektur sistem operasi modern:</p>
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:8px;">
+          <li>Konsep Dasar, Kernel &amp; Arsitektur</li>
+          <li>Manajemen Proses &amp; CPU Scheduling</li>
+          <li>Sinkronisasi, Deadlock &amp; IPC</li>
+          <li>Manajemen Memori Utama &amp; Virtual</li>
+          <li>Manajemen File System &amp; Hak Akses</li>
+          <li>Sub-sistem I/O &amp; Proteksi Sistem</li>
+        </ul>
+      </div>
+
+      <div class="card-clean warn-card" data-anim="fade-up" style="animation-delay:0.1s;">
+        <span class="pill-clean amber" style="margin-bottom:12px;">MILESTONE &amp; PRAKTIK</span>
+        <h3 class="h3">Pertemuan 8 – 12</h3>
+        <p style="margin-bottom:12px;">Transisi dari teori ke implementasi server riil:</p>
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:8px;">
+          <li><strong>P8:</strong> Reminder &amp; Review Desain Proyek Akhir</li>
+          <li><strong>P9:</strong> Instalasi OS Linux Server (VM VirtualBox)</li>
+          <li><strong>P10:</strong> Administrasi CLI, User &amp; Hak Akses (POSIX)</li>
+          <li><strong>P11:</strong> Setup Web Server (Nginx/Apache &amp; PHP)</li>
+          <li><strong>P12:</strong> Database, Firewall (UFW) &amp; Networking</li>
+        </ul>
+      </div>
+
+      <div class="card-clean good-card" data-anim="fade-up" style="animation-delay:0.2s;">
+        <span class="pill-clean emerald" style="margin-bottom:12px;">FINALISASI &amp; EVALUASI</span>
+        <h3 class="h3">Pertemuan 13 – 16</h3>
+        <p style="margin-bottom:12px;">Pengujian, presentasi, dan penilaian akhir:</p>
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:8px;">
+          <li><strong>P13 – 15:</strong> Presentasi Hasil Project Kelompok, Uji Stabilitas Server, &amp; Q&amp;A Dosen</li>
+          <li><strong>P16:</strong> Rekapitulasi &amp; Input Nilai Akhir</li>
+          <li><strong>Bebas UTS &amp; UAS Konvensional!</strong> Penilaian 100% berakar pada performa proyek dan pemahaman tim.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Kontrak Perkuliahan · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Perhatikan struktur perkuliahan kita. Kita membagi 16 pertemuan menjadi tiga fase logis.</p>
+      <p>Yang sangat penting dicatat: <strong>tidak ada ujian tulis UTS maupun UAS konvensional</strong>. Semua nilai berfokus pada pengerjaan proyek Web Server Linux.</p>
+      <p>Artinya, mahasiswa tidak sekadar menghafal definisi ujian, melainkan harus bisa mengonfigurasi server Linux secara langsung di terminal!</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 3: RINCIAN TUGAS PROYEK AKHIR
+       ========================================================= -->
+  <section class="slide" data-title="Ketentuan Proyek Akhir PBL">
+    <p class="kicker" data-anim="fade-down"><span>🎯</span> Spesifikasi Tugas Akhir Semester</p>
+    <h2 class="h2" data-anim="fade-up">Proyek Akhir: Web Server Berbasis Linux di Virtual Machine</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean" data-anim="fade-right">
+        <h3 class="h3" style="display:flex;align-items:center;gap:10px;">
+          <span style="color:var(--accent);">📦</span> Ketentuan Tim &amp; Lingkungan Teknis
+        </h3>
+        <ul style="padding-left:24px;margin:12px 0 0 0;display:flex;flex-direction:column;gap:14px;">
+          <li>
+            <strong>Pembentukan Tim:</strong> Kelompok dibentuk pada minggu ke-1 ini. Maksimal <strong>3 mahasiswa</strong> per kelompok.
+          </li>
+          <li>
+            <strong>Virtualisasi:</strong> Server dibangun di dalam Virtual Machine menggunakan <em>VirtualBox</em> atau <em>VMware Workstation</em>.
+          </li>
+          <li>
+            <strong>Distribusi Linux:</strong> Disarankan menggunakan <strong>Ubuntu Server (LTS)</strong> atau <strong>CentOS / Rocky Linux</strong>.
+          </li>
+          <li>
+            <strong>Stack Layanan:</strong> Web Server (Apache/Nginx), Database Engine (MariaDB/MySQL), Security Firewall (UFW/iptables), &amp; DNS/Host mapping.
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-clean" data-anim="fade-left">
+        <h3 class="h3" style="display:flex;align-items:center;gap:10px;">
+          <span style="color:var(--good);">📹</span> Luaran Video &amp; Pengumpulan
+        </h3>
+        <ul style="padding-left:24px;margin:12px 0 0 0;display:flex;flex-direction:column;gap:14px;">
+          <li>
+            <strong>Format Video Edukatif:</strong> Rekaman presentasi dan demo instalasi-konfigurasi web server berdurasi <strong>maksimal 10 menit</strong>.
+          </li>
+          <li>
+            <strong>Publikasi YouTube:</strong> Video wajib diunggah ke YouTube dengan kualitas minimal 1080p (Unlisted / Public).
+          </li>
+          <li>
+            <strong>Portal &amp; Email Pengumpulan Resmi:</strong>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px;">
+              <div>
+                <span style="font-size:15px;color:var(--text-3);display:block;margin-bottom:3px;">1. Tautan Form Utama:</span>
+                <code style="font-size:18px;color:var(--accent);font-weight:700;background:var(--accent-soft);padding:4px 10px;border-radius:6px;display:inline-block;">https://s.id/SOUBSI</code>
+              </div>
+              <div style="background:#f8fafc;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:16px;line-height:1.55;">
+                <span style="font-size:15px;color:var(--accent);font-weight:700;display:block;margin-bottom:4px;">2. Pengiriman Email Resmi:</span>
+                <div>• <strong>Kirim ke:</strong> <a href="mailto:dany.dto@bsi.ac.id" style="color:var(--accent);font-weight:700;">dany.dto@bsi.ac.id</a></div>
+                <div>• <strong>Subject:</strong> <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#0f172a;font-weight:700;font-size:15px;">Projek Sistem Operasi</code></div>
+                <div>• <strong>Isi Pesan:</strong> NIM, Nama Kelompok, link video YT</div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <strong>Panduan Lengkap:</strong> Rubrik penilaian dan rincian studi kasus tertera di dokumen <strong>Rencana Tugas Mahasiswa (RTM)</strong>.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Ketentuan Proyek PBL · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Inilah kontrak pengerjaan proyek akhir kita. Pastikan rekan-rekan sudah mulai berkoordinasi menentukan anggota tim yang terdiri dari maksimal 3 orang.</p>
+      <p>Pengumpulan video berdurasi maksimal 10 menit wajib dikirimkan ke form https://s.id/SOUBSI serta dikirimkan melalui email ke <strong>dany.dto@bsi.ac.id</strong> dengan Subject <strong>Projek Sistem Operasi</strong> dan isi pesan berupa <strong>NIM, Nama Kelompok, link video YT</strong>.</p>
+      <p>Kenapa kita memilih Linux untuk Web Server? Karena lebih dari 96% dari satu juta server top di dunia berjalan di atas kernel Linux. Kemampuan mengelola server via SSH/CLI adalah keterampilan wajib bagi sarjana informatika.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 4: ROADMAP MATERI PERTEMUAN 1
+       ========================================================= -->
+  <section class="slide" data-title="Roadmap Materi P01">
+    <p class="kicker" data-anim="fade-down"><span>🧭</span> Agenda Kuliah Perdana</p>
+    <h2 class="h2" data-anim="fade-up">4 Pokok Bahasan Utama Pertemuan 1</h2>
+
+    <div class="grid g4" style="gap:22px;margin-top:16px;">
+      <div class="card-clean accent-card" data-anim="zoom-pop">
+        <span class="stat-clean">01</span>
+        <h3 class="h3">Konsep Dasar OS</h3>
+        <p>Definisi formal, esensi abstraksi perangkat keras, dan sudut pandang top-down vs bottom-up pada arsitektur komputer.</p>
+      </div>
+
+      <div class="card-clean purple-card" data-anim="zoom-pop" style="animation-delay:0.1s;">
+        <span class="stat-clean" style="color:var(--purple);">02</span>
+        <h3 class="h3">5 Fungsi Inti</h3>
+        <p>Manajemen Proses, Alokasi Memori, Hirarki File System, Sub-sistem I/O, serta Mekanisme Proteksi &amp; Sumber Daya.</p>
+      </div>
+
+      <div class="card-clean warn-card" data-anim="zoom-pop" style="animation-delay:0.2s;">
+        <span class="stat-clean" style="color:var(--warn);">03</span>
+        <h3 class="h3">Peran &amp; Kernel</h3>
+        <p>Dual-mode CPU (User vs Kernel), System Calls, CLI vs GUI, serta arsitektur Monolithic vs Microkernel vs Hybrid.</p>
+      </div>
+
+      <div class="card-clean good-card" data-anim="zoom-pop" style="animation-delay:0.3s;">
+        <span class="stat-clean" style="color:var(--good);">04</span>
+        <h3 class="h3">Sejarah &amp; Evolusi</h3>
+        <p>Perjalanan komputasi dari batch card era 1950-an, kelahiran UNIX, ledakan PC GUI, hingga era Cloud &amp; Mobile.</p>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Roadmap Materi · Pertemuan 1</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Hari ini kita membagi materi ke dalam 4 pilar utama.</p>
+      <p>Pilar 1 membahas definisi dan fondasi filosofis sistem operasi.</p>
+      <p>Pilar 2 mengupas 5 fungsi manajerial yang wajib ada pada semua OS modern.</p>
+      <p>Pilar 3 membahas mekanisme hardware, privilege ring, dan arsitektur kernel.</p>
+      <p>Pilar 4 menelusuri sejarah bagaimana OS berevolusi dari komputer mekanis hingga server cloud saat ini.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 5: DEFINISI & KONSEP DASAR OS
+       ========================================================= -->
+  <section class="slide" data-title="Konsep Dasar OS">
+    <p class="kicker" data-anim="fade-down"><span>💡</span> Bagian 1: Konsep Dasar</p>
+    <h2 class="h2" data-anim="fade-up">Apa Sebenarnya Sistem Operasi (OS) Itu?</h2>
+
+    <div class="grid g2" style="gap:30px;margin-top:10px;">
+      <div class="card-clean" data-anim="fade-right">
+        <span class="pill-clean" style="margin-bottom:12px;">DEFINISI FORMAL</span>
+        <h3 class="h3">Jembatan Perantara Perangkat</h3>
+        <p style="margin-bottom:14px;">
+          <strong>Sistem Operasi (OS)</strong> adalah program perangkat lunak sistem fundamental yang berjalan terus-menerus (<em>kernel</em>), bertindak sebagai perantara resmi antara <strong>pengguna / aplikasi</strong> dan <strong>perangkat keras fisik komputer</strong>.
+        </p>
+        <p>
+          OS menyediakan lingkungan yang aman, terstandarisasi, dan efisien sehingga aplikasi perangkat lunak dapat berjalan tanpa perlu mengetahui detail internal register chip perangkat keras.
+        </p>
+      </div>
+
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <span class="pill-clean" style="margin-bottom:12px;">DUA PARADIGMA UTAMA</span>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div>
+            <h4 class="h4" style="color:var(--accent);">1. Extended Machine (Top-Down View)</h4>
+            <p style="font-size:18px;margin:0;">
+              Menyembunyikan kerumitan sirkuit elektronik dan disk controller. Mengubah perangkat keras mentah menjadi abstraksi elegan berupa <em>file, folder, process, socket,</em> dan <em>window</em> melalui System Call.
+            </p>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:14px;">
+            <h4 class="h4" style="color:var(--accent);">2. Resource Manager (Bottom-Up View)</h4>
+            <p style="font-size:18px;margin:0;">
+              Manajer pengatur alokasi sumber daya. Mengatur multiplexing waktu (CPU time sharing) dan ruang (RAM allocation) agar puluhan proses tidak saling bertabrakan atau memonopoli sistem.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Bagian 1: Konsep Dasar · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Menurut buku klasik Andrew Tanenbaum dan Silberschatz, ada dua cara memandang Sistem Operasi:</p>
+      <p>Pertama, <strong>Top-Down (Extended Machine)</strong>: Bayangkan jika programmer web harus menulis kode sinyal listrik untuk memutar motor harddisk saat menyimpan gambar. Tanpa OS, membuat aplikasi akan sangat rumit. OS mengabstraksikannya menjadi fungsi sederhana seperti `fwrite()`.</p>
+      <p>Kedua, <strong>Bottom-Up (Resource Manager)</strong>: OS bertindak seperti polisi lalu lintas yang membagi CPU, RAM, dan I/O secara adil antar banyak aplikasi yang berjalan bersamaan.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 6: ARSITEKTUR 4 LAPISAN KOMPUTER
+       ========================================================= -->
+  <section class="slide" data-title="Lapisan Sistem Komputer">
+    <p class="kicker" data-anim="fade-down"><span>🏗️</span> Arsitektur Komputasi</p>
+    <h2 class="h2" data-anim="fade-up">Posisi Sistem Operasi dalam Hirarki 4 Lapisan</h2>
+
+    <div style="display:flex;flex-direction:column;gap:14px;max-width:1200px;margin:10px auto 0 auto;width:100%;">
+      <!-- Layer 4 -->
+      <div class="arch-box" data-anim="fade-up" style="background:#f8fafc;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;color:var(--text-1);font-size:20px;">LAYER 4: USERS (PENGGUNA)</span>
+        <span style="color:var(--text-2);font-size:18px;">End Users, Programmer, Database Administrator, Web Visitors</span>
+      </div>
+
+      <!-- Arrow down -->
+      <div style="text-align:center;font-size:20px;color:var(--text-3);line-height:0.8;">▼ berinteraksi melalui UI / Browser / API ▼</div>
+
+      <!-- Layer 3 -->
+      <div class="arch-box" data-anim="fade-up" style="animation-delay:0.1s;background:#f1f5f9;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;color:var(--text-1);font-size:20px;">LAYER 3: APPLICATION SOFTWARE</span>
+        <span style="color:var(--text-2);font-size:18px;">Web Server (Nginx/Apache), DBMS (MySQL), Compiler (GCC), Text Editor, CLI Shell</span>
+      </div>
+
+      <!-- Arrow down -->
+      <div style="text-align:center;font-size:20px;color:var(--accent);line-height:0.8;font-weight:700;">
+        ▼ SYSTEM CALL INTERFACE (POSIX / Win32 API / Trap) ▼
+      </div>
+
+      <!-- Layer 2 -->
+      <div class="arch-box active" data-anim="fade-up" style="animation-delay:0.2s;padding:20px 24px;border-width:2px;box-shadow:0 6px 18px rgba(37,99,235,0.12);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span style="font-weight:800;font-size:22px;color:var(--accent);">LAYER 2: SISTEM OPERASI (THE OPERATING SYSTEM)</span>
+          <span class="pill-clean" style="font-size:14px;">Ring 0 / Supervisor Mode</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:10px;margin-top:10px;font-size:16px;">
+          <div style="background:#ffffff;padding:8px;border-radius:8px;border:1px solid #bfdbfe;">Process Manager</div>
+          <div style="background:#ffffff;padding:8px;border-radius:8px;border:1px solid #bfdbfe;">Memory Manager</div>
+          <div style="background:#ffffff;padding:8px;border-radius:8px;border:1px solid #bfdbfe;">File System (VFS)</div>
+          <div style="background:#ffffff;padding:8px;border-radius:8px;border:1px solid #bfdbfe;">I/O Device Drivers</div>
+          <div style="background:#ffffff;padding:8px;border-radius:8px;border:1px solid #bfdbfe;">Protection &amp; Security</div>
+        </div>
+      </div>
+
+      <!-- Arrow down -->
+      <div style="text-align:center;font-size:20px;color:var(--text-3);line-height:0.8;">▼ Instruksi Mesin, Biner, &amp; Sinyal Listrik Controller ▼</div>
+
+      <!-- Layer 1 -->
+      <div class="arch-box dark" data-anim="fade-up" style="animation-delay:0.3s;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:20px;color:#38bdf8;">LAYER 1: COMPUTER HARDWARE (BARE-METAL)</span>
+        <span style="color:#cbd5e1;font-size:18px;">CPU (ALU/Registers), RAM Fisik, NVMe/SSD Storage, Network Interface Card (NIC), GPU</span>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Arsitektur Sistem · Posisi OS dalam Komputer</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Diagram ini memperlihatkan batas proteksi arsitektur komputasi.</p>
+      <p>Perhatikan garis pemisah antara Layer 3 dan Layer 2. Aplikasi pengguna berjalan di User Mode, tidak boleh menyentuh register hardware Layer 1 secara langsung.</p>
+      <p>Jika Nginx ingin membaca file di storage, ia harus memohon izin kepada Sistem Operasi melalui <strong>System Call Interface</strong>. Inilah kunci keamanan dan stabilitas komputer modern.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 7: KOMPARASI TANPA VS DENGAN OS
+       ========================================================= -->
+  <section class="slide" data-title="Komparasi Tanpa vs Dengan OS">
+    <p class="kicker" data-anim="fade-down"><span>⚖️</span> Urgensi Sistem Operasi</p>
+    <h2 class="h2" data-anim="fade-up">Mengapa Komputer Membutuhkan Sistem Operasi?</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean warn-card" data-anim="fade-right">
+        <span class="pill-clean red" style="margin-bottom:12px;">BARE-METAL (TANPA SISTEM OPERASI)</span>
+        <h3 class="h3" style="color:var(--bad);">Kekacauan Eksekusi &amp; Monopoli</h3>
+        <ul style="padding-left:22px;margin:10px 0 0 0;display:flex;flex-direction:column;gap:12px;">
+          <li><strong>Akses Memori Mutlak:</strong> Program menulis langsung ke alamat fisik RAM. Jika satu program salah pointer, seluruh komputer langsung crash seketika.</li>
+          <li><strong>Tidak Ada Multitasking:</strong> Hanya satu program yang bisa berjalan pada satu waktu (Single Job). CPU terbuang sia-sia saat menunggu input.</li>
+          <li><strong>Menulis Driver Sendiri:</strong> Programmer harus mengodekan sendiri sinyal mekanik motor harddisk dan timing bus USB.</li>
+          <li><strong>Nol Proteksi:</strong> Tidak ada hak akses, tidak ada enkripsi, data pengguna lain dapat dibaca bebas.</li>
+        </ul>
+      </div>
+
+      <div class="card-clean good-card" data-anim="fade-left">
+        <span class="pill-clean emerald" style="margin-bottom:12px;">DENGAN SISTEM OPERASI MODERN</span>
+        <h3 class="h3" style="color:var(--good);">Harmonisasi, Kecepatan, &amp; Keamanan</h3>
+        <ul style="padding-left:22px;margin:10px 0 0 0;display:flex;flex-direction:column;gap:12px;">
+          <li><strong>Isolasi Memori Virtual:</strong> Tiap proses memiliki ruang memori maya sendiri. Jika browser crash, server web dan sistem tetap berjalan aman.</li>
+          <li><strong>Multitasking Terkoordinasi:</strong> Ratusan proses berjalan bersamaan melalui penjadwalan CPU milidetik (Time-Sharing).</li>
+          <li><strong>Abstraksi Driver Generik:</strong> Software berinteraksi dengan API standar (POSIX/Win32). Portabilitas kode terjamin lintas merek hardware.</li>
+          <li><strong>Kontrol Akses Bertingkat:</strong> Proteksi autentikasi, enkripsi berkas, dan pembatasan wewenang user biasa vs root administrator.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Urgensi OS · Komparasi Arsitektur</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Slide ini memberikan pemahaman kontras yang sangat jelas kepada mahasiswa.</p>
+      <p>Bandingkan komputasi di era 1950-an tanpa OS dengan era sekarang. OS bukan beban tambahan (overhead), melainkan penyelamat yang memungkinkan perangkat lunak modern bekerja stabil dan aman.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 8: FUNGSI INTI 1 - MANAJEMEN PROSES
+       ========================================================= -->
+  <section class="slide" data-title="Manajemen Proses">
+    <p class="kicker" data-anim="fade-down"><span>⚙️</span> Bagian 2: Fungsi &amp; Manajemen Inti (Pilar 1)</p>
+    <h2 class="h2" data-anim="fade-up">1. Manajemen Proses (Process Management)</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean" data-anim="fade-right">
+        <span class="pill-clean" style="margin-bottom:12px;">KONSEP PROSES</span>
+        <h3 class="h3">Program vs Proses: Apa Bedanya?</h3>
+        <p style="margin-bottom:12px;">
+          <strong>Program</strong> adalah entitas pasif berupa file executable yang tersimpan di harddisk (misalnya file biner <code>/usr/sbin/nginx</code>).
+        </p>
+        <p style="margin-bottom:16px;">
+          <strong>Proses</strong> adalah program yang <em>sedang aktif dieksekusi</em> di memori, lengkap dengan register CPU, Program Counter (PC), dan struktur memori tersendiri.
+        </p>
+        <div style="background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:14px;font-size:17px;">
+          <strong>Anatomi Memori Proses:</strong>
+          <ul style="margin:6px 0 0 18px;padding:0;display:flex;flex-direction:column;gap:4px;">
+            <li><strong>Text Segment:</strong> Kode biner instruksi mesin</li>
+            <li><strong>Data Segment:</strong> Variabel global &amp; static</li>
+            <li><strong>Heap:</strong> Memori dinamis (alokasi <code>malloc</code> / <code>new</code>)</li>
+            <li><strong>Stack:</strong> Variabel lokal fungsi &amp; return address</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <span class="pill-clean" style="margin-bottom:12px;">TANGGUNG JAWAB UTAMA OS</span>
+        <h3 class="h3">Tugas Kernel dalam Mengelola Proses</h3>
+        <ul style="padding-left:22px;margin:10px 0 0 0;display:flex;flex-direction:column;gap:12px;">
+          <li>
+            <strong>Pembuatan &amp; Terminasi:</strong> Menjalankan proses baru (system call <code>fork()</code> &amp; <code>execve()</code> di Linux) dan membersihkan sumber daya saat proses berakhir (<code>exit()</code>).
+          </li>
+          <li>
+            <strong>Process Control Block (PCB):</strong> Struktur data kernel penyimpan informasi vital: Process ID (PID), prioritas, status register, dan pointer memori.
+          </li>
+          <li>
+            <strong>Sinkronisasi Proses:</strong> Mencegah <em>Race Condition</em> saat beberapa proses mengakses data bersama menggunakan Semaphore atau Mutex Lock.
+          </li>
+          <li>
+            <strong>Komunikasi Antar Proses (IPC):</strong> Menyediakan pipa pertukaran data melalui Message Queue, Shared Memory, Pipe, dan Network Sockets.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Fungsi 1: Manajemen Proses · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Ingat perbedaan mendasar ini: Program adalah resep kue di dalam buku (pasif di disk), sedangkan Proses adalah koki yang sedang membuat kue di dapur (aktif dieksekusi di CPU dan RAM).</p>
+      <p>Setiap proses di Linux memiliki nomor identitas unik yang disebut <strong>PID (Process ID)</strong>. Di pertemuan Linux nanti, kita akan sering menggunakan perintah `ps aux`, `top`, dan `kill` untuk mengelola proses ini.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 9: STATE DIAGRAM PROSES & CPU SCHEDULING
+       ========================================================= -->
+  <section class="slide" data-title="State Diagram & Penjadwalan CPU">
+    <p class="kicker" data-anim="fade-down"><span>🔄</span> Siklus Hidup Proses</p>
+    <h2 class="h2" data-anim="fade-up">State Diagram Proses &amp; Algoritma Penjadwalan CPU</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <!-- State Diagram Card -->
+      <div class="card-clean" data-anim="fade-right">
+        <h3 class="h3" style="color:var(--accent);">5 Status Siklus Hidup Proses</h3>
+        <p style="font-size:18px;margin-bottom:16px;">Setiap proses bertransisi melewati status berikut sepanjang masa hidupnya:</p>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="pill-clean gray" style="min-width:110px;justify-content:center;">1. NEW</span>
+            <span style="font-size:18px;">Proses baru saja dialokasikan dan dibuat oleh OS.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="pill-clean" style="min-width:110px;justify-content:center;">2. READY</span>
+            <span style="font-size:18px;">Proses berada di antrean memori, siap dieksekusi menunggu giliran CPU.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="pill-clean emerald" style="min-width:110px;justify-content:center;">3. RUNNING</span>
+            <span style="font-size:18px;">Instruksi proses sedang aktif dikerjakan oleh core prosesor CPU.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="pill-clean amber" style="min-width:110px;justify-content:center;">4. WAITING</span>
+            <span style="font-size:18px;">Proses terhenti sementara menunggu event I/O atau sinyal data selesai.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="pill-clean red" style="min-width:110px;justify-content:center;">5. TERMINATED</span>
+            <span style="font-size:18px;">Proses telah selesai, PCB dihapus, dan memori dibebaskan kembali.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scheduling Algorithms Card -->
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <h3 class="h3" style="color:var(--accent);">Algoritma Penjadwalan CPU</h3>
+        <p style="font-size:18px;margin-bottom:14px;">Strategi OS menentukan proses mana yang berhak menggunakan CPU:</p>
+
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:12px;">
+          <li>
+            <strong>Round Robin (RR):</strong> Tiap proses mendapat jatah waktu eksekusi yang sama (<em>Time Quantum</em>, misal 10–100 ms). Sangat adil untuk sistem interaktif multi-user.
+          </li>
+          <li>
+            <strong>Priority Scheduling:</strong> Tiap proses memiliki bobot prioritas. Proses dengan prioritas kritis (misal kernel alert) dieksekusi lebih dahulu.
+          </li>
+          <li>
+            <strong>First-Come, First-Served (FCFS):</strong> Proses yang datang pertama dilayani pertama (sederhana tapi rawan <em>Convoy Effect</em>).
+          </li>
+          <li>
+            <strong>Preemptive vs Non-Preemptive:</strong> Pada <em>Preemptive</em>, OS berhak merebut CPU dari proses yang sedang berjalan jika batas waktu habis atau datang proses berprioritas lebih tinggi.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>State Diagram &amp; Scheduling · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Perhatikan status <strong>Waiting / Blocked</strong>. Ketika web server membaca database dari harddisk, proses tidak menahan CPU. Kernel memindahkannya ke status Waiting agar proses lain bisa memakai CPU.</p>
+      <p>Algoritma <strong>Round Robin</strong> adalah alasan mengapa komputer kita terasa bisa memutar musik di Spotify sambil mengetik di Word dan mendownload file bersamaan di satu core CPU.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 10: FUNGSI INTI 2 - MANAJEMEN MEMORI
+       ========================================================= -->
+  <section class="slide" data-title="Manajemen Memori">
+    <p class="kicker" data-anim="fade-down"><span>💾</span> Bagian 2: Fungsi &amp; Manajemen Inti (Pilar 2)</p>
+    <h2 class="h2" data-anim="fade-up">2. Manajemen Memori Utama (RAM Management)</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean" data-anim="fade-right">
+        <span class="pill-clean" style="margin-bottom:12px;">HIERARKI MEMORI</span>
+        <h3 class="h3">Spektrum Kecepatan vs Kapasitas</h3>
+        <p style="margin-bottom:14px;">Memori diatur dalam piramida hierarki trade-off performa vs biaya:</p>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:17px;">
+          <div style="background:#eff6ff;padding:8px 14px;border-radius:8px;display:flex;justify-content:space-between;">
+            <strong>Registers CPU &amp; L1/L2/L3 Cache</strong>
+            <span style="color:var(--accent);">~0.5 - 2 ns · Sangat Cepat &amp; Mahal</span>
+          </div>
+          <div style="background:#f1f5f9;padding:8px 14px;border-radius:8px;display:flex;justify-content:space-between;">
+            <strong>Main Memory (DDR4 / DDR5 RAM)</strong>
+            <span style="color:#0f172a;">~50 - 100 ns · Memori Utama Eksekusi</span>
+          </div>
+          <div style="background:#f8fafc;padding:8px 14px;border-radius:8px;display:flex;justify-content:space-between;">
+            <strong>NVMe SSD / SATA Solid State</strong>
+            <span style="color:var(--text-2);">~10 - 100 µs · Non-volatile Cepat</span>
+          </div>
+          <div style="background:#f8fafc;padding:8px 14px;border-radius:8px;display:flex;justify-content:space-between;">
+            <strong>Hard Disk Drive (HDD) &amp; Cloud Storage</strong>
+            <span style="color:var(--text-3);">~5 - 15 ms · Kapasitas Masif &amp; Murah</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <span class="pill-clean" style="margin-bottom:12px;">TEKNIK MANAJEMEN MEMORI</span>
+        <h3 class="h3">Tanggung Jawab Memori pada OS</h3>
+        <ul style="padding-left:22px;margin:10px 0 0 0;display:flex;flex-direction:column;gap:12px;">
+          <li>
+            <strong>Alokasi Dinamis &amp; Deallokasi:</strong> Melacak bagian memori mana yang sedang dipakai, oleh proses siapa, dan membebaskannya saat proses selesai.
+          </li>
+          <li>
+            <strong>Paging:</strong> Membagi memori fisik menjadi blok berukuran sama yang disebut <em>Frame</em> (biasanya 4 KB), dan membagi memori logika program menjadi <em>Page</em>. Menghilangkan masalah fragmentasi eksternal.
+          </li>
+          <li>
+            <strong>Segmentasi:</strong> Membagi ruang memori program berdasarkan unit logika manusia (segmen fungsi main, segmen pustaka library, segmen data stack).
+          </li>
+          <li>
+            <strong>Proteksi Alamat:</strong> Menggunakan register Base &amp; Limit untuk mencegah suatu proses membaca atau menimpa memori proses tetangganya.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Fungsi 2: Manajemen Memori · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>CPU hanya bisa membaca instruksi secara langsung dari Register dan RAM. Program di harddisk harus dimuat (load) ke RAM terlebih dahulu sebelum bisa dieksekusi.</p>
+      <p>Tugas OS adalah memastikan setiap proses mendapatkan jatah RAM yang cukup, dan memastikan proses Nginx tidak bisa mengintip memori proses database MySQL.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 11: VIRTUAL MEMORY & SWAPPING
+       ========================================================= -->
+  <section class="slide" data-title="Konsep Virtual Memory">
+    <p class="kicker" data-anim="fade-down"><span>🧠</span> Rekayasa Memori Lanjut</p>
+    <h2 class="h2" data-anim="fade-up">Virtual Memory: Menembus Batas Kapasitas RAM Fisik</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean" data-anim="fade-right">
+        <h3 class="h3" style="color:var(--accent);">Masalah Nyata di Lingkungan Server</h3>
+        <p style="margin-bottom:14px;">
+          Bayangkan server Anda hanya memiliki RAM fisik sebesar <strong>8 GB</strong>, namun Anda harus menjalankan Web Server, Database, dan analytics engine yang total permintaannya mencapai <strong>16 GB</strong>.
+        </p>
+        <p style="margin-bottom:14px;">
+          Apakah server akan menolak berjalan dan menampilkan error <em>Out of Memory</em>?
+        </p>
+        <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;">
+          <strong style="color:var(--accent);font-size:20px;display:block;margin-bottom:6px;">Solusi: Virtual Memory &amp; Swap Space</strong>
+          <p style="margin:0;font-size:18px;">
+            Sistem Operasi memisahkan konsep <strong>Memori Logis (Virtual Address Space)</strong> yang dilihat oleh programmer dari <strong>Memori Fisik (Physical RAM)</strong> yang sesungguhnya ada di motherboard.
+          </p>
+        </div>
+      </div>
+
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <h3 class="h3" style="color:var(--accent);">Mekanisme Kerja Demand Paging</h3>
+        <ul style="padding-left:22px;margin:10px 0 0 0;display:flex;flex-direction:column;gap:12px;">
+          <li>
+            <strong>Penerjemahan Alamat (MMU):</strong> Perangkat keras <em>Memory Management Unit (MMU)</em> memetakan alamat virtual ke frame RAM fisik menggunakan <em>Page Table</em>.
+          </li>
+          <li>
+            <strong>Page Fault:</strong> Ketika program mengakses halaman memori yang belum ada di RAM (masih di disk), CPU memicu interupsi <em>Page Fault</em> ke OS.
+          </li>
+          <li>
+            <strong>Swapping / Paging In-Out:</strong> OS memindahkan halaman memori yang jarang digunakan ke ruang disk penyimpanan (<em>Swap Space</em> di Linux / <em>pagefile.sys</em> di Windows) dan memuat halaman baru yang dibutuhkan ke RAM.
+          </li>
+          <li>
+            <strong>Manfaat Utama:</strong> Program berukuran lebih besar dari RAM fisik dapat berjalan mulus, serta isolasi keamanan antar proses terjamin 100%.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Virtual Memory &amp; Swapping · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Virtual memory adalah salah satu penemuan terbesar dalam arsitektur komputer.</p>
+      <p>Bagi programmer, seolah-olah program mereka memiliki memori tak terbatas yang berurutan dari alamat 0x0000 sampai 0xFFFF. Padahal di belakang layar, OS dan MMU memecah data tersebut menjadi potongan 4KB yang disebar di RAM fisik atau bahkan disimpan sementara di Swap SSD.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 12: FUNGSI INTI 3 - SISTEM BERKAS (FILE SYSTEM)
+       ========================================================= -->
+  <section class="slide" data-title="Manajemen Sistem Berkas">
+    <p class="kicker" data-anim="fade-down"><span>📁</span> Bagian 2: Fungsi &amp; Manajemen Inti (Pilar 3)</p>
+    <h2 class="h2" data-anim="fade-up">3. Manajemen Sistem Berkas (File System Management)</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean" data-anim="fade-right">
+        <span class="pill-clean" style="margin-bottom:12px;">ABSTRAKSI PENYIMPANAN PERSISTEN</span>
+        <h3 class="h3">Definisi &amp; Struktur Berkas</h3>
+        <p style="margin-bottom:14px;">
+          <strong>File (Berkas)</strong> adalah abstraksi logis dari sekumpulan byte informasi yang disimpan secara persisten di media penyimpanan sekunder (SSD/HDD), terbebas dari detail sektor geometris disk fisik.
+        </p>
+        <p style="margin-bottom:14px;">
+          <strong>Struktur Pohon Hierarkis (Directory Tree):</strong> OS mengatur berkas dalam format hierarki pohon.
+        </p>
+        <div style="background:#f8fafc;padding:12px 18px;border-radius:10px;border:1px solid var(--border);font-family:var(--font-mono);font-size:17px;">
+          <span style="color:var(--accent);font-weight:700;">Linux Root (/)</span> : <code>/etc/</code> (konfigurasi), <code>/var/www/</code> (web data), <code>/home/</code> (user), <code>/bin/</code> (biner)
+        </div>
+      </div>
+
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <span class="pill-clean" style="margin-bottom:12px;">TANGGUNG JAWAB &amp; TIPE FILE SYSTEM</span>
+        <h3 class="h3">Tugas OS &amp; Format File System Populer</h3>
+        <ul style="padding-left:22px;margin:10px 0 0 0;display:flex;flex-direction:column;gap:12px;">
+          <li>
+            <strong>Operasi Standar:</strong> Pembuatan (<code>create</code>), pembacaan (<code>read</code>), penulisan (<code>write</code>), reposisi pointer (<code>seek</code>), dan penghapusan (<code>unlink/delete</code>).
+          </li>
+          <li>
+            <strong>Struktur Inode &amp; Metadata:</strong> Menyimpan atribut file: ukuran, pemilik, waktu modifikasi, dan pointer blok disk.
+          </li>
+          <li>
+            <strong>ext4 &amp; XFS (Linux):</strong> Format standar server Linux dengan fitur <em>Journaling</em> untuk mencegah kerusakan data saat listrik padam tiba-tiba.
+          </li>
+          <li>
+            <strong>NTFS (Windows) &amp; APFS (macOS):</strong> Mendukung enkripsi bawaan (BitLocker/FileVault), kompresi otomatis, dan volume snapshots.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Fungsi 3: Sistem Berkas · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Di Linux ada filosofi terkenal: <strong>"Everything is a file"</strong>. File teks, folder, keyboard, harddisk, bahkan port jaringan direpresentasikan sebagai berkas di direktori `/dev` atau `/proc`.</p>
+      <p>Format `ext4` yang akan kita gunakan di server Ubuntu memiliki kemampuan Journaling. Jika server mati mendadak, sistem tidak perlu mengecek seluruh disk selama berjam-jam, melainkan cukup membaca catatan log jurnal.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 13: MODEL HAK AKSES POSIX (UGO & CHMOD)
+       ========================================================= -->
+  <section class="slide" data-title="Kontrol Akses Berkas Linux">
+    <p class="kicker" data-anim="fade-down"><span>🔒</span> Keamanan Berkas Server</p>
+    <h2 class="h2" data-anim="fade-up">Kontrol Akses Berkas Linux: Model POSIX &amp; chmod</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <!-- Table Matrix -->
+      <div class="card-clean" data-anim="fade-right">
+        <h3 class="h3" style="color:var(--accent);">Struktur Izin: User, Group, &amp; Others (UGO)</h3>
+        <p style="font-size:18px;margin-bottom:12px;">Setiap file di server memiliki 3 kelas hak akses:</p>
+
+        <table class="table-clean" style="font-size:17px;">
+          <thead>
+            <tr>
+              <th>Kelas Entitas</th>
+              <th>Simbol</th>
+              <th>Deskripsi Izin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>User (Owner)</strong></td>
+              <td><code>u</code></td>
+              <td>Akun pengguna pemilik berkas tersebut</td>
+            </tr>
+            <tr>
+              <td><strong>Group</strong></td>
+              <td><code>g</code></td>
+              <td>Kelompok pengguna yang berbagi hak akses</td>
+            </tr>
+            <tr>
+              <td><strong>Others</strong></td>
+              <td><code>o</code></td>
+              <td>Semua orang lain di dunia luar / publik</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:16px;background:#f8fafc;padding:12px;border-radius:8px;font-size:17px;">
+          <strong>Nilai Bobot Biner Izin:</strong>
+          <span style="color:var(--accent);font-weight:700;margin-left:8px;">Read (r = 4)</span> &nbsp;|&nbsp;
+          <span style="color:var(--good);font-weight:700;">Write (w = 2)</span> &nbsp;|&nbsp;
+          <span style="color:var(--purple);font-weight:700;">Execute (x = 1)</span>
+        </div>
+      </div>
+
+      <!-- Real Server Examples -->
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <h3 class="h3" style="color:var(--accent);">Standar Keamanan Web Server Produksi</h3>
+        <div class="terminal-clean" style="margin-bottom:14px;">
+          <span class="comment"># Standar izin folder web root Apache/Nginx</span><br>
+          <span class="prompt">$</span> <span class="cmd">chmod 755 /var/www/html</span><br>
+          <span class="hl">rwxr-xr-x</span> <span class="comment">(Owner: rwx | Group: r-x | Others: r-x)</span><br><br>
+          <span class="comment"># Standar izin berkas script PHP / HTML</span><br>
+          <span class="prompt">$</span> <span class="cmd">chmod 644 /var/www/html/index.php</span><br>
+          <span class="hl">rw-r--r--</span> <span class="comment">(Owner: rw- | Group: r-- | Others: r--)</span><br><br>
+          <span class="comment"># Berkas rahasia private key SSH</span><br>
+          <span class="prompt">$</span> <span class="cmd">chmod 600 ~/.ssh/id_rsa</span><br>
+          <span class="hl">rw-------</span> <span class="comment">(Hanya pemilik yang boleh baca-tulis!)</span>
+        </div>
+        <p style="font-size:17px;margin:0;">
+          <strong>Aturan Emas Admin:</strong> Jangan pernah memberikan <code>chmod 777</code> pada file web server Anda di internet, karena mengizinkan siapa pun menyuntikkan script berbahaya!
+        </p>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Kontrol Akses Berkas · Keamanan Sistem Operasi</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Konsep izin berkas POSIX ini mutlak harus dikuasai oleh mahasiswa untuk proyek Web Server Linux kita nanti.</p>
+      <p>Banyak pemula tergoda melakukan `chmod -R 777` saat website mereka error permission. Jelaskan bahwa 777 adalah malapetaka keamanan, karena hacker bisa menulis shell script jahat langsung ke server.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 14: FUNGSI INTI 4 - MANAJEMEN I/O
+       ========================================================= -->
+  <section class="slide" data-title="Manajemen Input/Output (I/O)">
+    <p class="kicker" data-anim="fade-down"><span>🔌</span> Bagian 2: Fungsi &amp; Manajemen Inti (Pilar 4)</p>
+    <h2 class="h2" data-anim="fade-up">4. Manajemen Perangkat Input/Output (I/O Subsystem)</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean" data-anim="fade-right">
+        <span class="pill-clean" style="margin-bottom:12px;">TANTANGAN HETEROGENITAS I/O</span>
+        <h3 class="h3">Kesenjangan Kecepatan Hardware</h3>
+        <p style="margin-bottom:14px;">
+          CPU beroperasi dalam skala <em>Gigahertz (miliaran siklus per detik)</em>, sedangkan periferal I/O seperti keyboard beroperasi dalam puluhan Hertz, dan harddisk dalam milidetik.
+        </p>
+        <p style="margin-bottom:14px;">
+          <strong>Komponen Sub-sistem I/O OS:</strong>
+        </p>
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:10px;">
+          <li><strong>Device Drivers:</strong> Lapisan software penerjemah instruksi generik OS ke perintah register spesifik hardware vendor.</li>
+          <li><strong>Buffering:</strong> Menyimpan data sementara di RAM untuk mengatasi perbedaan kecepatan transmisi antar perangkat.</li>
+          <li><strong>Caching:</strong> Menyimpan salinan data yang sering diakses di memori cepat untuk memangkas latency.</li>
+          <li><strong>Spooling:</strong> Antrean penampungan pekerjaan untuk perangkat yang tidak bisa digunakan paralel (contoh: antrean dokumen printer).</li>
+        </ul>
+      </div>
+
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <span class="pill-clean" style="margin-bottom:12px;">METODE TRANSFER DATA I/O</span>
+        <h3 class="h3">Evolusi Teknik Transfer I/O ke CPU</h3>
+        <div style="display:flex;flex-direction:column;gap:14px;margin-top:10px;">
+          <div style="background:#f8fafc;padding:12px 16px;border-radius:10px;border-left:4px solid var(--bad);">
+            <strong style="color:var(--bad);display:block;font-size:18px;">1. Programmed I/O (Polling / Busy-Waiting)</strong>
+            <p style="margin:4px 0 0 0;font-size:17px;">CPU terus menerus memeriksa loop status bit perangkat hardware. Sangat boros daya dan membuang 100% kapasitas CPU.</p>
+          </div>
+          <div style="background:#f8fafc;padding:12px 16px;border-radius:10px;border-left:4px solid var(--warn);">
+            <strong style="color:var(--warn);display:block;font-size:18px;">2. Interrupt-Driven I/O</strong>
+            <p style="margin:4px 0 0 0;font-size:17px;">CPU memerintahkan perangkat bekerja, lalu CPU mengerjakan proses lain. Ketika perangkat siap, sinyal interupsi (hardware interrupt) dikirim ke CPU.</p>
+          </div>
+          <div style="background:#eff6ff;padding:12px 16px;border-radius:10px;border-left:4px solid var(--accent);">
+            <strong style="color:var(--accent);display:block;font-size:18px;">3. Direct Memory Access (DMA)</strong>
+            <p style="margin:4px 0 0 0;font-size:17px;">Chip DMA controller memindahkan blok data berukuran besar langsung antara memori RAM dan disk storage tanpa membebani intervensi CPU per-byte!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Fungsi 4: Manajemen I/O · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>I/O adalah bagian terlambat dari sistem komputer. Bayangkan jika CPU harus menunggu harddisk membaca data byte demi byte, CPU akan menganggur 99.9% waktunya.</p>
+      <p>Dengan teknik <strong>Direct Memory Access (DMA)</strong>, CPU cukup berkata: "Tolong salin 1 GB data dari SSD ke alamat RAM 0x4000, kabari saya lewat interrupt jika sudah selesai." Sementara itu, CPU bebas mengeksekusi kode lain dengan kecepatan penuh.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 15: FUNGSI INTI 5 - KEAMANAN & SUMBER DAYA
+       ========================================================= -->
+  <section class="slide" data-title="Keamanan & Proteksi Sistem">
+    <p class="kicker" data-anim="fade-down"><span>🛡️</span> Bagian 2: Fungsi &amp; Manajemen Inti (Pilar 5)</p>
+    <h2 class="h2" data-anim="fade-up">5. Manajemen Keamanan, Proteksi, &amp; Sumber Daya</h2>
+
+    <div class="grid g3" style="gap:24px;margin-top:10px;">
+      <div class="card-clean accent-card" data-anim="zoom-pop">
+        <span class="pill-clean" style="margin-bottom:12px;">DEFENSI EKSTERNAL</span>
+        <h3 class="h3">Keamanan (Security)</h3>
+        <p style="margin-bottom:12px;">Melindungi data dan sumber daya sistem dari akses pihak tidak berwenang:</p>
+        <ul style="padding-left:20px;margin:0;display:flex;flex-direction:column;gap:8px;font-size:18px;">
+          <li><strong>Autentikasi:</strong> Verifikasi identitas user (password hashing SHA-512, SSH Public Key, 2FA).</li>
+          <li><strong>Otorisasi:</strong> Menetapkan batas wewenang (Role-Based Access Control / sudo privilege).</li>
+          <li><strong>Enkripsi:</strong> Melindungi kerahasiaan data at-rest (LUKS/BitLocker) dan in-transit (TLS/SSL).</li>
+        </ul>
+      </div>
+
+      <div class="card-clean purple-card" data-anim="zoom-pop" style="animation-delay:0.1s;">
+        <span class="pill-clean purple" style="margin-bottom:12px;">ISOLASI INTERNAL</span>
+        <h3 class="h3">Proteksi (Protection)</h3>
+        <p style="margin-bottom:12px;">Mekanisme internal untuk mengontrol akses program ke sumber daya sistem:</p>
+        <ul style="padding-left:20px;margin:0;display:flex;flex-direction:column;gap:8px;font-size:18px;">
+          <li><strong>Isolasi Proses:</strong> Memastikan proses nakal tidak dapat membaca memori kernel atau proses lain.</li>
+          <li><strong>Hardware Rings:</strong> Penegakan izin eksekusi instruksi CPU melalui ring privilege tingkat rendah.</li>
+          <li><strong>Sandboxing:</strong> Mengurung aplikasi berbahaya dalam wadah terisolasi (Chroot, AppArmor, SELinux).</li>
+        </ul>
+      </div>
+
+      <div class="card-clean good-card" data-anim="zoom-pop" style="animation-delay:0.2s;">
+        <span class="pill-clean emerald" style="margin-bottom:12px;">OPTIMASI INFRASTRUKTUR</span>
+        <h3 class="h3">Alokasi &amp; Accounting</h3>
+        <p style="margin-bottom:12px;">Pengawasan dan optimasi penggunaan hardware secara efisien:</p>
+        <ul style="padding-left:20px;margin:0;display:flex;flex-direction:column;gap:8px;font-size:18px;">
+          <li><strong>Resource Accounting:</strong> Memonitor konsumsi CPU, memori, bandwidth jaringan, dan disk I/O.</li>
+          <li><strong>Pencegahan Deadlock:</strong> Mendeteksi dan menghindari kondisi saling mengunci (<em>Circular Wait</em>).</li>
+          <li><strong>Linux cgroups:</strong> Membatasi batas maksimum kuota RAM/CPU tiap container (pondasi Docker).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Fungsi 5: Keamanan &amp; Sumber Daya · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Perhatikan perbedaan antara <strong>Security</strong> dan <strong>Protection</strong>.</p>
+      <p>Security adalah pertahanan terhadap ancaman luar: hacker yang mencoba login SSH dengan brute force. Sedangkan Protection adalah mekanisme pertahanan internal: memastikan bug di Google Chrome tidak bisa menghapus file database Linux Anda.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 16: DUAL-MODE OPERASI: USER VS KERNEL MODE
+       ========================================================= -->
+  <section class="slide" data-title="Dual-Mode Operasi CPU">
+    <p class="kicker" data-anim="fade-down"><span>⚡</span> Mekanisme Proteksi Perangkat Keras</p>
+    <h2 class="h2" data-anim="fade-up">Dual-Mode Operation: User Mode vs Kernel Mode</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean" data-anim="fade-right">
+        <h3 class="h3" style="color:var(--accent);">Arsitektur Hardware Privilege Rings (x86)</h3>
+        <p style="margin-bottom:14px;">
+          Prosesor modern menyediakan dukungan perangkat keras berupa <strong>Mode Bit</strong> di register status CPU untuk memisahkan wewenang eksekusi:
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="background:#fef2f2;border:1.5px solid #fecaca;padding:16px;border-radius:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong style="color:var(--bad);font-size:20px;">Kernel Mode (Ring 0 / Supervisor)</strong>
+              <span class="pill-clean red" style="font-size:13px;">Mode Bit = 0</span>
+            </div>
+            <p style="margin:8px 0 0 0;font-size:17px;color:#7f1d1d;">
+              CPU memiliki akses tanpa batas ke seluruh instruksi istimewa (<em>privileged instructions</em>), akses langsung ke memori fisik, register I/O, dan tabel halaman. Ditempati secara eksklusif oleh <strong>Kernel OS</strong>.
+            </p>
+          </div>
+
+          <div style="background:#eff6ff;border:1.5px solid #bfdbfe;padding:16px;border-radius:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong style="color:var(--accent);font-size:20px;">User Mode (Ring 3 / Application)</strong>
+              <span class="pill-clean" style="font-size:13px;">Mode Bit = 1</span>
+            </div>
+            <p style="margin:8px 0 0 0;font-size:17px;color:#1e3a8a;">
+              Hak eksekusi sangat dibatasi. Jika aplikasi mencoba mengeksekusi instruksi terlarang (seperti mematikan interupsi CPU), prosesor langsung memicu <em>Trap/Exception</em> dan menghentikan proses tersebut.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <h3 class="h3" style="color:var(--accent);">Jembatan Transisi: System Call (Syscall)</h3>
+        <p style="font-size:18px;margin-bottom:14px;">Bagaimana aplikasi di Ring 3 bisa menyimpan berkas ke disk?</p>
+        <div style="background:#0f172a;color:#f8fafc;padding:16px 20px;border-radius:12px;font-family:var(--font-mono);font-size:16px;line-height:1.7;">
+          <span style="color:#94a3b8;">1. User App</span> memanggil wrapper: <code>write(fd, buf, count)</code><br>
+          <span style="color:#38bdf8;">2. Software Trap</span> memicu interupsi (e.g. <code>syscall</code> / <code>int 0x80</code>)<br>
+          <span style="color:#f59e0b;">3. Hardware CPU</span> beralih: <strong>Mode Bit 1 ➔ Mode Bit 0</strong><br>
+          <span style="color:#4ade80;">4. Kernel Code</span> mengeksekusi <code>sys_write()</code> secara aman<br>
+          <span style="color:#a78bfa;">5. Selesai</span>, CPU reset: <strong>Mode Bit 0 ➔ Mode Bit 1</strong> &amp; return
+        </div>
+        <p style="font-size:17px;margin:14px 0 0 0;">
+          Mekanisme ini menjamin bahwa seluruh permintaan I/O selalu diawasi dan divalidasi oleh kernel demi stabilitas sistem.
+        </p>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Dual-Mode Operation · Proteksi Perangkat Keras</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Dual-mode operation adalah konsep yang sangat sering keluar dalam ujian sertifikasi dan wawancara kerja teknis.</p>
+      <p>Mengapa aplikasi pengguna tidak boleh langsung menulis ke disk? Karena jika diizinkan, sebuah program virus bisa langsung menimpa boot sector atau menghapus data sistem tanpa konfirmasi apapun.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 17: ANTARMUKA INTERAKSI: CLI VS GUI
+       ========================================================= -->
+  <section class="slide" data-title="Antarmuka Interaksi: CLI vs GUI">
+    <p class="kicker" data-anim="fade-down"><span>🖥️</span> Metode Interaksi Pengguna</p>
+    <h2 class="h2" data-anim="fade-up">Command-Line Interface (CLI) vs Graphical Interface (GUI)</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean accent-card" data-anim="fade-right">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span class="pill-clean">STANDAR SERVER INDUSTRI</span>
+          <span style="font-size:24px;">⌨️</span>
+        </div>
+        <h3 class="h3" style="color:var(--accent);">Command-Line Interface (CLI)</h3>
+        <p style="font-size:18px;margin-bottom:12px;">Interaksi berbasis teks instruksi murni melalui terminal shell (Bash, Zsh, PowerShell).</p>
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:10px;font-size:18px;">
+          <li><strong>Konsumsi Memori Sangat Ringan:</strong> Server headless dapat berjalan lancar hanya dengan RAM 512 MB – 1 GB tanpa beban GPU.</li>
+          <li><strong>Otomasi Penuh (Scripting):</strong> Tugas berulang dapat diotomasikan dengan Bash script, Cron jobs, dan Ansible playbook.</li>
+          <li><strong>Akses Remote Cepat &amp; Aman:</strong> Dikelola dari jarak jauh melalui protokol terenkripsi SSH dengan bandwidth internet sangat minim.</li>
+          <li><strong>Kendalikan Presisi:</strong> Mendukung piping, regular expression, dan manipulasi sistem berkas secara mendalam.</li>
+        </ul>
+      </div>
+
+      <div class="card-clean purple-card" data-anim="fade-left">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span class="pill-clean purple">STANDAR DESKTOP USER</span>
+          <span style="font-size:24px;">🖱️</span>
+        </div>
+        <h3 class="h3" style="color:var(--purple);">Graphical User Interface (GUI)</h3>
+        <p style="font-size:18px;margin-bottom:12px;">Interaksi visual menggunakan elemen jendela (window), ikon, menu, dan pointer mouse (WIMP).</p>
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:10px;font-size:18px;">
+          <li><strong>Intuitif &amp; Ramah Pengguna:</strong> Learning curve rendah, mudah digunakan oleh orang awam tanpa menghafal perintah terminal.</li>
+          <li><strong>Ideal untuk Multimedia:</strong> Mutlak diperlukan untuk desain grafis, editing video 4K, pemodelan 3D, dan gaming.</li>
+          <li><strong>Lingkungan Desktop Populer:</strong> GNOME, KDE Plasma, XFCE (Linux), Windows Explorer (Windows), Aqua (macOS).</li>
+          <li><strong>Beban Sumber Daya Tinggi:</strong> Mengonsumsi RAM 1.5 – 3 GB hanya untuk me-render antarmuka desktop visual.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Metode Interaksi · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Mengapa pada praktikum nanti kita menggunakan <strong>Ubuntu Server</strong> yang hanya berupa layar hitam CLI tanpa GUI?</p>
+      <p>Jawabannya sederhana: di dunia industri cloud (AWS, Google Cloud, Azure), server web tidak pernah dipasangi antarmuka GUI. Menghilangkan GUI menghemat ribuan megabyte RAM, meningkatkan kecepatan komputasi, dan menutup celah keamanan.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 18: ARSITEKTUR KERNEL
+       ========================================================= -->
+  <section class="slide" data-title="Arsitektur Kernel: Monolithic vs Microkernel vs Hybrid">
+    <p class="kicker" data-anim="fade-down"><span>⚙️</span> Desain Arsitektur Inti</p>
+    <h2 class="h2" data-anim="fade-up">Arsitektur Kernel: Monolithic, Microkernel, &amp; Hybrid</h2>
+
+    <div class="grid g3" style="gap:24px;margin-top:10px;">
+      <!-- Monolithic -->
+      <div class="card-clean accent-card" data-anim="zoom-pop">
+        <span class="pill-clean" style="margin-bottom:10px;">LINUX &amp; TRADITIONAL UNIX</span>
+        <h3 class="h3" style="color:var(--accent);">Monolithic Kernel</h3>
+        <p style="font-size:17px;margin-bottom:12px;">
+          Seluruh layanan OS (VFS, IPC, Scheduler, Memory Manager, Device Drivers) berada bersama di <strong>Kernel Space (Ring 0)</strong>.
+        </p>
+        <div style="background:#f8fafc;padding:12px;border-radius:10px;font-size:17px;">
+          <p style="margin:0 0 6px 0;color:var(--good);font-weight:700;">✔ Kelebihan:</p>
+          <span style="font-size:16px;">Komunikasi antar modul super cepat tanpa overhead IPC; throughput sangat tinggi.</span>
+          <p style="margin:8px 0 6px 0;color:var(--bad);font-weight:700;">✖ Kekurangan:</p>
+          <span style="font-size:16px;">Jika satu driver periferal mengalami bug memory leak, seluruh sistem bisa mengalami <em>Kernel Panic</em>.</span>
+        </div>
+      </div>
+
+      <!-- Microkernel -->
+      <div class="card-clean good-card" data-anim="zoom-pop" style="animation-delay:0.1s;">
+        <span class="pill-clean emerald" style="margin-bottom:10px;">QNX, MINIX, &amp; seL4</span>
+        <h3 class="h3" style="color:var(--good);">Microkernel</h3>
+        <p style="font-size:17px;margin-bottom:12px;">
+          Hanya fungsi paling esensial (IPC dasar, low-level memory, thread scheduling) yang berada di Ring 0. Driver &amp; FS berjalan di <strong>User Space</strong>.
+        </p>
+        <div style="background:#f8fafc;padding:12px;border-radius:10px;font-size:17px;">
+          <p style="margin:0 0 6px 0;color:var(--good);font-weight:700;">✔ Kelebihan:</p>
+          <span style="font-size:16px;">Sangat stabil dan aman. Jika driver crash, kernel me-restart daemon tanpa mematikan sistem.</span>
+          <p style="margin:8px 0 6px 0;color:var(--bad);font-weight:700;">✖ Kekurangan:</p>
+          <span style="font-size:16px;">Penurunan performa akibat tingginya overhead perpindahan konteks pesan (Message Passing IPC).</span>
+        </div>
+      </div>
+
+      <!-- Hybrid -->
+      <div class="card-clean purple-card" data-anim="zoom-pop" style="animation-delay:0.2s;">
+        <span class="pill-clean purple" style="margin-bottom:10px;">WINDOWS NT &amp; MACOS XNU</span>
+        <h3 class="h3" style="color:var(--purple);">Hybrid Kernel</h3>
+        <p style="font-size:17px;margin-bottom:12px;">
+          Menggabungkan struktur modularitas microkernel dengan efisiensi monolitik, menjalankan subsistem kritis di kernel space.
+        </p>
+        <div style="background:#f8fafc;padding:12px;border-radius:10px;font-size:17px;">
+          <p style="margin:0 0 6px 0;color:var(--good);font-weight:700;">✔ Kelebihan:</p>
+          <span style="font-size:16px;">Keseimbangan ideal antara kecepatan eksekusi grafis/I/O dan kemudahan pemeliharaan arsitektur.</span>
+          <p style="margin:8px 0 6px 0;color:var(--bad);font-weight:700;">✖ Kekurangan:</p>
+          <span style="font-size:16px;">Kompleksitas kode kernel sangat tinggi dan potensi celah permukaan serangan tetap ada.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Arsitektur Kernel · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Perdebatan legendaris di dunia ilmu komputer: <strong>Tannenbaum–Torvalds debate</strong> tahun 1992.</p>
+      <p>Andrew Tanenbaum mengkritik Linux karena memakai arsitektur Monolitik yang dianggap kuno, dan memprediksi Microkernel akan menang. Namun kenyataannya, Linus Torvalds membuktikan bahwa kernel monolitik modern dengan dynamic loadable modules (LKM) mendominasi cloud dunia karena performanya yang tak tertandingi.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 19: TAKSONOMI SISTEM OPERASI
+       ========================================================= -->
+  <section class="slide" data-title="Taksonomi Kategori Sistem Operasi">
+    <p class="kicker" data-anim="fade-down"><span>🗂️</span> Bagian 3: Kategori &amp; Jenis</p>
+    <h2 class="h2" data-anim="fade-up">Taksonomi Sistem Operasi Berdasarkan Lingkungan Penggunaan</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:18px;margin-top:10px;">
+      <!-- Category 1 -->
+      <div class="card-clean" data-anim="fade-up">
+        <span class="pill-clean" style="margin-bottom:8px;font-size:13px;">DESKTOP</span>
+        <h4 class="h4" style="font-size:19px;margin-bottom:6px;">General-Purpose</h4>
+        <p style="font-size:16px;margin:0 0 8px 0;">Fokus pada kenyamanan UX, grafis multimedia, dan dukungan periferal konsumen.</p>
+        <span style="font-size:15px;color:var(--accent);font-weight:600;">Windows 11, macOS, Fedora, Ubuntu Desktop</span>
+      </div>
+
+      <!-- Category 2 -->
+      <div class="card-clean accent-card" data-anim="fade-up" style="animation-delay:0.1s;">
+        <span class="pill-clean" style="margin-bottom:8px;font-size:13px;">ENTERPRISE</span>
+        <h4 class="h4" style="font-size:19px;margin-bottom:6px;">Server OS</h4>
+        <p style="font-size:16px;margin:0 0 8px 0;">Dioptimalkan untuk stabilitas 24/7, skalabilitas CPU multi-socket, dan keamanan.</p>
+        <span style="font-size:15px;color:var(--accent);font-weight:600;">Ubuntu Server, RHEL, CentOS, Rocky, Win Server</span>
+      </div>
+
+      <!-- Category 3 -->
+      <div class="card-clean purple-card" data-anim="fade-up" style="animation-delay:0.2s;">
+        <span class="pill-clean purple" style="margin-bottom:8px;font-size:13px;">MOBILE</span>
+        <h4 class="h4" style="font-size:19px;margin-bottom:6px;">Mobile OS</h4>
+        <p style="font-size:16px;margin:0 0 8px 0;">Manajemen efisiensi daya baterai, konektivitas seluler, layar sentuh &amp; sensor.</p>
+        <span style="font-size:15px;color:var(--purple);font-weight:600;">Android (Linux kernel), Apple iOS, KaiOS</span>
+      </div>
+
+      <!-- Category 4 -->
+      <div class="card-clean warn-card" data-anim="fade-up" style="animation-delay:0.3s;">
+        <span class="pill-clean amber" style="margin-bottom:8px;font-size:13px;">DETERMINISTIK</span>
+        <h4 class="h4" style="font-size:19px;margin-bottom:6px;">Real-Time (RTOS)</h4>
+        <p style="font-size:16px;margin:0 0 8px 0;">Menjamin kepastian tenggat waktu eksekusi respon milidetik/mikrodetik.</p>
+        <span style="font-size:15px;color:var(--warn);font-weight:600;">VxWorks, QNX Neutrino, FreeRTOS, RTLinux</span>
+      </div>
+
+      <!-- Category 5 -->
+      <div class="card-clean good-card" data-anim="fade-up" style="animation-delay:0.4s;">
+        <span class="pill-clean emerald" style="margin-bottom:8px;font-size:13px;">JARINGAN</span>
+        <h4 class="h4" style="font-size:19px;margin-bottom:6px;">Network OS</h4>
+        <p style="font-size:16px;margin:0 0 8px 0;">Khusus menangani switching paket data berkecepatan tinggi pada perangkat router.</p>
+        <span style="font-size:15px;color:var(--good);font-weight:600;">Cisco IOS, Juniper Junos, MikroTik RouterOS</span>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Kategori Sistem Operasi · Klasifikasi Industri</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Sistem operasi tidak hanya Windows dan Android. Di industri telekomunikasi, router Cisco dan MikroTik memiliki OS khusus yang dirancang untuk merutekan jutaan paket data per detik tanpa crash.</p>
+      <p>Di bidang avionik dan otomotif, sistem rem mobil membutuhkan Real-Time OS, bukan Windows, karena sistem tidak boleh mengalami lag sedetik pun saat pedal rem diinjak.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 20: REAL-TIME OPERATING SYSTEMS (RTOS)
+       ========================================================= -->
+  <section class="slide" data-title="Real-Time Operating Systems (RTOS)">
+    <p class="kicker" data-anim="fade-down"><span>⏱️</span> Sistem Misi Kritis</p>
+    <h2 class="h2" data-anim="fade-up">Real-Time Operating Systems (RTOS): Deterministik &amp; Kritis</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean warn-card" data-anim="fade-right">
+        <h3 class="h3" style="color:var(--warn);">Apa yang Membedakan RTOS dengan OS Biasa?</h3>
+        <p style="margin-bottom:14px;">
+          Pada sistem operasi konvensional (Windows/macOS), fokus utamanya adalah <em>Throughput Rata-Rata</em> dan kenyamanan visual pengguna. Keterlambatan respon beberapa milidetik tidak masalah.
+        </p>
+        <p style="margin-bottom:14px;">
+          Pada <strong>RTOS (Real-Time OS)</strong>, kebenaran suatu proses tidak hanya ditentukan oleh <strong>hasil komputasinya yang tepat</strong>, melainkan juga oleh <strong>KEPASTIAN WAKTU (Deadlines)</strong> hasil tersebut diserahkan.
+        </p>
+        <div style="background:#fffbeb;border:1px solid #fde68a;padding:14px;border-radius:10px;font-size:18px;">
+          <strong>Sifat Utama RTOS: Deterministik!</strong><br>
+          <span style="color:#92400e;">Waktu yang dibutuhkan untuk merespons interupsi hardware dapat diprediksi secara matematis dan tidak boleh melebihi batas toleransi.</span>
+        </div>
+      </div>
+
+      <div class="card-clean" data-anim="fade-left">
+        <h3 class="h3" style="color:var(--accent);">Dua Spektrum Sistem Real-Time</h3>
+        <div style="display:flex;flex-direction:column;gap:14px;margin-top:8px;">
+          <div style="background:#fef2f2;border-left:4px solid var(--bad);padding:14px 18px;border-radius:8px;">
+            <strong style="color:var(--bad);font-size:19px;display:block;">1. Hard Real-Time Systems</strong>
+            <p style="margin:4px 0 0 0;font-size:17px;">
+              Keterlambatan respon = <strong>Bencana Total (Catastrophic Failure)</strong> yang mengancam nyawa atau kerusakan bernilai jutaan dolar.<br>
+              <em>Contoh:</em> Sensor rem ABS mobil, sistem kendali reaktor nuklir, navigasi roket luar angkasa, alat pacu jantung.<br>
+              <em>OS:</em> <strong>VxWorks</strong> (digunakan di Mars Rover NASA), <strong>QNX</strong>.
+            </p>
+          </div>
+
+          <div style="background:#eff6ff;border-left:4px solid var(--accent);padding:14px 18px;border-radius:8px;">
+            <strong style="color:var(--accent);font-size:19px;display:block;">2. Soft Real-Time Systems</strong>
+            <p style="margin:4px 0 0 0;font-size:17px;">
+              Keterlambatan respon = <strong>Penurunan Kualitas (Degradation)</strong>, bukan bencana fatal.<br>
+              <em>Contoh:</em> Video streaming YouTube buffering, latency suara panggilan VoIP, sinkronisasi controller game konsol.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>RTOS · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Pertanyaan menarik untuk kelas: Apakah sistem operasi Windows bisa dipakai untuk mengontrol sistem rem mobil otonom?</p>
+      <p>Jawabannya sama sekali tidak bisa. Karena Windows memiliki background update, garbage collector, dan scheduling yang tidak deterministik. Jika saat mengerem sistem sibuk mengindeks search harddisk selama 1 detik, mobil bisa menabrak.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 21: SEJARAH OS GENERASI 1 & 2
+       ========================================================= -->
+  <section class="slide" data-title="Sejarah OS: 1945 - 1965">
+    <p class="kicker" data-anim="fade-down"><span>⏳</span> Bagian 4: Sejarah &amp; Evolusi Sistem Operasi</p>
+    <h2 class="h2" data-anim="fade-up">1945 – 1965: Awal Mula Sebelum Adanya Sistem Operasi</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <!-- Gen 1 -->
+      <div class="card-clean warn-card" data-anim="fade-right">
+        <span class="pill-clean amber" style="margin-bottom:12px;">GENERASI PERTAMA (1945 – 1955)</span>
+        <h3 class="h3">Era Tabung Hampa &amp; Sakelar Plugboard</h3>
+        <p style="margin-bottom:12px;">
+          Komputer mekanis/elektronik raksasa berbobot tonase (ENIAC, EDSAC, IBM 701) menggunakan ribuan tabung hampa udara (vacuum tubes).
+        </p>
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:10px;font-size:18px;">
+          <li><strong>Belum Ada Sistem Operasi!</strong> Komputer hanya menjalankan satu perhitungan matematika balistik militer pada satu waktu.</li>
+          <li><strong>Bahasa Mesin Fisik:</strong> Programmer menginput program langsung menggunakan sakelar manual biner (0 dan 1) atau kabel plugboard.</li>
+          <li><strong>Inefisiensi Parah:</strong> Waktu persiapan instalasi kabel memakan waktu berjam-jam, padahal waktu komputasi hanya beberapa menit.</li>
+        </ul>
+      </div>
+
+      <!-- Gen 2 -->
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <span class="pill-clean" style="margin-bottom:12px;">GENERASI KEDUA (1955 – 1965)</span>
+        <h3 class="h3">Transistor &amp; Lahirnya Batch Processing</h3>
+        <p style="margin-bottom:12px;">
+          Penemuan transistor menggantikan tabung hampa: komputer menjadi lebih andal, lebih kecil, dan masuk ke ranah komersial (IBM 7094).
+        </p>
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:10px;font-size:18px;">
+          <li><strong>Penyimpanan Kartu Plong (Punch Cards):</strong> Program diketik di kartu berlubang dan dimasukkan oleh operator manusia.</li>
+          <li><strong>Sistem Operasi Pertama di Dunia (1956):</strong> <strong>GM-NAA I/O</strong> dikembangkan oleh General Motors Research &amp; North American Aviation untuk komputer IBM 701.</li>
+          <li><strong>Batch Processing System:</strong> Pekerjaan sejenis dikumpulkan dalam satu gulungan pita magnetik (batch), dieksekusi berurutan otomatis tanpa intervensi manual antar program.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Garis Waktu Sejarah · Generasi 1 &amp; 2 (1945-1965)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Tahun 1956 adalah tahun bersejarah kelahiran OS pertama di dunia: <strong>GM-NAA I/O</strong> yang dibuat oleh divisi riset General Motors.</p>
+      <p>Fungsi utamanya sangat sederhana: secara otomatis memuat pekerjaan berikutnya dari pita magnetik ketika pekerjaan sebelumnya selesai, sehingga operator tidak perlu mematikan mesin dan memasang kabel lagi.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 22: SEJARAH OS GENERASI 3 - MULTIPROGRAMMING & UNIX
+       ========================================================= -->
+  <section class="slide" data-title="Sejarah OS: 1965 - 1980">
+    <p class="kicker" data-anim="fade-down"><span>⏳</span> Garis Waktu Komputasi</p>
+    <h2 class="h2" data-anim="fade-up">1965 – 1980: Multiprogramming &amp; Kelahiran Abadi UNIX</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean" data-anim="fade-right">
+        <span class="pill-clean" style="margin-bottom:12px;">TEROBOSAN TEKNOLOGI IC</span>
+        <h3 class="h3">Integrated Circuits &amp; Time-Sharing</h3>
+        <ul style="padding-left:22px;margin:10px 0 0 0;display:flex;flex-direction:column;gap:12px;font-size:18px;">
+          <li>
+            <strong>IBM System/360 (1964):</strong> Komputer mainframe pertama berbasis sirkuit terpadu (IC) yang menyatukan komputasi sains dan bisnis dalam satu platform OS/360.
+          </li>
+          <li>
+            <strong>Multiprogramming:</strong> Memori memuat beberapa program sekaligus. Ketika Program A menunggu input data pita, CPU langsung beralih mengeksekusi Program B.
+          </li>
+          <li>
+            <strong>Time-Sharing (CTSS &amp; MULTICS di MIT):</strong> Puluhan pengguna dapat duduk di depan terminal layar dan mengetik perintah secara simultan melalui pembagian waktu CPU milidetik.
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-clean accent-card" data-anim="fade-left">
+        <span class="pill-clean" style="margin-bottom:12px;">TONGGAK SEJARAH 1969/1971</span>
+        <h3 class="h3">Kelahiran UNIX di AT&amp;T Bell Labs</h3>
+        <p style="font-size:18px;margin-bottom:10px;">
+          Ken Thompson, Dennis Ritchie, Brian Kernighan, dan Doug McIlroy menciptakan <strong>UNIX</strong> serta bahasa pemrograman <strong>C</strong> pada minikomputer PDP-11.
+        </p>
+        <div style="background:#f8fafc;padding:14px;border-radius:10px;font-size:17px;border:1px solid var(--border);">
+          <strong>3 Filosofi Desain UNIX yang Mengubah Peradaban:</strong>
+          <ol style="margin:6px 0 0 18px;padding:0;display:flex;flex-direction:column;gap:4px;">
+            <li>Tulis program yang mengerjakan <strong>satu hal saja dengan sangat sempurna</strong>.</li>
+            <li>Buat program yang dapat saling <strong>terhubung via pipa (pipe <code>|</code>)</strong>.</li>
+            <li>Standarisasi antarmuka: <strong>"Everything is a File"</strong>.</li>
+          </ol>
+        </div>
+        <p style="font-size:16px;color:var(--text-3);margin:10px 0 0 0;">
+          Portabilitas bahasa C membuat UNIX dapat di-compile dan dijalankan di berbagai merek komputer, menjadi cikal bakal Linux dan macOS hari ini.
+        </p>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Garis Waktu Sejarah · Generasi 3 (1965-1980)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Kelahiran UNIX pada 1969 di Bell Labs adalah momen paling berpengaruh dalam sejarah software.</p>
+      <p>Dennis Ritchie menciptakan bahasa C secara khusus untuk menulis ulang kernel UNIX. Hingga saat ini, 50 tahun kemudian, sistem operasi Linux, macOS, dan Android masih mewarisi DNA dan standar POSIX dari UNIX ini.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 23: SEJARAH OS GENERASI 4 - REVOLUSI PC & LINUX
+       ========================================================= -->
+  <section class="slide" data-title="Sejarah OS: 1980 - 2000">
+    <p class="kicker" data-anim="fade-down"><span>⏳</span> Garis Waktu Komputasi</p>
+    <h2 class="h2" data-anim="fade-up">1980 – 2000: Era Komputer Personal (PC), GUI, &amp; Lahirnya Linux</h2>
+
+    <div class="grid g3" style="gap:24px;margin-top:10px;">
+      <!-- PC & MS-DOS -->
+      <div class="card-clean" data-anim="zoom-pop">
+        <span class="pill-clean" style="margin-bottom:10px;">MIKROPROSESOR VLSI</span>
+        <h3 class="h3">CP/M &amp; MS-DOS</h3>
+        <p style="font-size:17px;margin-bottom:10px;">
+          Gary Kildall merilis <strong>CP/M</strong>. Pada tahun 1981, IBM meluncurkan IBM PC dengan sistem operasi <strong>MS-DOS</strong> dari Microsoft (Bill Gates).
+        </p>
+        <p style="font-size:16px;color:var(--text-2);">
+          MS-DOS menjadi standar <em>de facto</em> komputasi desktop dunia berbasis Command Line 16-bit.
+        </p>
+      </div>
+
+      <!-- GUI & Windows -->
+      <div class="card-clean purple-card" data-anim="zoom-pop" style="animation-delay:0.1s;">
+        <span class="pill-clean purple" style="margin-bottom:10px;">REVOLUSI GRAFIS</span>
+        <h3 class="h3">Apple Mac &amp; Windows 95</h3>
+        <p style="font-size:17px;margin-bottom:10px;">
+          Tahun 1984, Steve Jobs merilis <strong>Apple Macintosh</strong>, mempopulerkan desktop GUI mouse ke rumah tangga.
+        </p>
+        <p style="font-size:16px;color:var(--text-2);">
+          Microsoft merilis Windows 1.0 (1985), disusul <strong>Windows 95</strong> yang mengintegrasikan arsitektur 32-bit dan menu "Start" legendaris.
+        </p>
+      </div>
+
+      <!-- Linux 1991 -->
+      <div class="card-clean good-card" data-anim="zoom-pop" style="animation-delay:0.2s;">
+        <span class="pill-clean emerald" style="margin-bottom:10px;">OPEN SOURCE REVOLUTION</span>
+        <h3 class="h3">Linus Torvalds &amp; Linux (1991)</h3>
+        <p style="font-size:17px;margin-bottom:10px;">
+          Mahasiswa Finlandia berusia 21 tahun merilis kernel bebas di internet: <em>"just a hobby, won't be big and professional"</em>.
+        </p>
+        <p style="font-size:16px;color:var(--text-2);">
+          Dikombinasikan dengan lisensi GNU GPL karya Richard Stallman, Linux menjelma menjadi sistem operasi server paling tangguh di muka bumi.
+        </p>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Garis Waktu Sejarah · Generasi 4 (1980-2000)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Tahun 1991 adalah tahun kelahiran Linux! Linus Torvalds menulis kernel Linux karena ia ingin menjalankan sistem operasi mirip UNIX di komputer 386 pribadinya tanpa harus membayar lisensi UNIX yang sangat mahal.</p>
+      <p>Kolaborasi Linus dengan komunitas open-source global mengubah seluruh industri teknologi selamanya.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 24: SEJARAH OS GENERASI 5 - CLOUD & MOBILE
+       ========================================================= -->
+  <section class="slide" data-title="Sejarah OS: 2000 - Sekarang">
+    <p class="kicker" data-anim="fade-down"><span>⏳</span> Garis Waktu Komputasi Modern</p>
+    <h2 class="h2" data-anim="fade-up">2000 – Sekarang: Era Mobile, Cloud Computing, &amp; Kontainerisasi</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean accent-card" data-anim="fade-right">
+        <span class="pill-clean" style="margin-bottom:12px;">PARADIGMA MOBILE DI SAKU ANDA</span>
+        <h3 class="h3">Dominasi Smartphone Global</h3>
+        <p style="font-size:18px;margin-bottom:12px;">
+          Tahun 2007, Apple meluncurkan <strong>iOS</strong> berbasis kernel hybrid Darwin/XNU. Setahun berselang (2008), Google merilis <strong>Android</strong> berbasis kernel Linux open-source.
+        </p>
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:10px;font-size:18px;">
+          <li>Miliaran manusia kini memegang komputer saku berspesifikasi multi-core dengan sensor giroskop, kamera AI, dan GPS.</li>
+          <li>Fitur proteksi modern: Application Sandboxing ketat, enkripsi biometric (Face ID / Fingerprint), dan dynamic permission.</li>
+        </ul>
+      </div>
+
+      <div class="card-clean good-card" data-anim="fade-left">
+        <span class="pill-clean emerald" style="margin-bottom:12px;">PARADIGMA CLOUD &amp; DATA CENTER</span>
+        <h3 class="h3">Virtualisasi, Container, &amp; Cloud OS</h3>
+        <p style="font-size:18px;margin-bottom:12px;">
+          Komputasi bergeser dari server fisik lokal ke raksasa cloud terdistribusi (AWS, Google Cloud, Microsoft Azure).
+        </p>
+        <ul style="padding-left:22px;margin:0;display:flex;flex-direction:column;gap:10px;font-size:18px;">
+          <li><strong>Virtualisasi Hardware (Hypervisor):</strong> KVM, Xen, VMware ESXi membagi satu server fisik menjadi puluhan Virtual Machine independen.</li>
+          <li><strong>Kontainerisasi (Docker &amp; K8s):</strong> Memanfaatkan fitur kernel Linux <code>namespaces</code> dan <code>cgroups</code> untuk menjalankan microservices tanpa overhead OS penuh.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Garis Waktu Sejarah · Generasi 5 (2000 - Sekarang)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Hari ini kita hidup di era Generasi Kelima. Server tidak lagi berbentuk kotak fisik di bawah meja kantor, melainkan instance Virtual Machine di cloud.</p>
+      <p>Teknologi kontainer seperti Docker yang sangat populer saat ini sebenarnya adalah fitur native dari kernel Linux!</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 25: POHON GENEALOGI SISTEM OPERASI
+       ========================================================= -->
+  <section class="slide" data-title="Pohon Genealogi Sistem Operasi">
+    <p class="kicker" data-anim="fade-down"><span>🌳</span> Silsilah Evolusi</p>
+    <h2 class="h2" data-anim="fade-up">Pohon Genealogi: Hubungan Silsilah Sistem Operasi Dunia</h2>
+
+    <div class="grid g3" style="gap:24px;margin-top:10px;">
+      <!-- Tree 1: Unix Family -->
+      <div class="card-clean purple-card" data-anim="zoom-pop">
+        <span class="pill-clean purple" style="margin-bottom:10px;">GARIS KETURUNAN UNIX</span>
+        <h3 class="h3" style="color:var(--purple);">Keluarga BSD &amp; Apple</h3>
+        <div style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:10px;padding:14px;font-family:var(--font-mono);font-size:16px;line-height:1.7;">
+          UNIX Bell Labs (1969)<br>
+          &nbsp;├─ BSD (Berkeley Software)<br>
+          &nbsp;│&nbsp;&nbsp;&nbsp;├─ FreeBSD / OpenBSD<br>
+          &nbsp;│&nbsp;&nbsp;&nbsp;└─ NeXTSTEP (Steve Jobs)<br>
+          &nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ <strong>macOS</strong> (Darwin/XNU)<br>
+          &nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ <strong>Apple iOS / iPadOS</strong><br>
+          &nbsp;└─ UNIX Komersial (Solaris, AIX)
+        </div>
+      </div>
+
+      <!-- Tree 2: Linux Family -->
+      <div class="card-clean good-card" data-anim="zoom-pop" style="animation-delay:0.1s;">
+        <span class="pill-clean emerald" style="margin-bottom:10px;">GARIS LINUX &amp; GNU</span>
+        <h3 class="h3" style="color:var(--good);">Distribusi Linux Modern</h3>
+        <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:14px;font-family:var(--font-mono);font-size:16px;line-height:1.7;">
+          MINIX ➔ Inspirasi Linus (1991)<br>
+          &nbsp;├─ <strong>Linux Kernel + GNU Tools</strong><br>
+          &nbsp;│&nbsp;&nbsp;&nbsp;├─ Debian ➔ <strong>Ubuntu</strong> ➔ Mint<br>
+          &nbsp;│&nbsp;&nbsp;&nbsp;├─ Red Hat ➔ <strong>RHEL / CentOS</strong><br>
+          &nbsp;│&nbsp;&nbsp;&nbsp;├─ Arch Linux, Alpine Linux<br>
+          &nbsp;│&nbsp;&nbsp;&nbsp;└─ <strong>Android</strong> (AOSP)<br>
+          &nbsp;└─ Embedded / RTLinux
+        </div>
+      </div>
+
+      <!-- Tree 3: Windows Family -->
+      <div class="card-clean accent-card" data-anim="zoom-pop" style="animation-delay:0.2s;">
+        <span class="pill-clean" style="margin-bottom:10px;">GARIS MICROSOFT</span>
+        <h3 class="h3" style="color:var(--accent);">Evolusi DOS ke Windows NT</h3>
+        <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:14px;font-family:var(--font-mono);font-size:16px;line-height:1.7;">
+          QDOS ➔ MS-DOS 1.0 (1981)<br>
+          &nbsp;├─ Era GUI Shell (Win 1 - 3.1)<br>
+          &nbsp;├─ Era DOS-based (Win 95, 98, ME)<br>
+          &nbsp;└─ <strong>Garis Windows NT</strong> (Hybrid):<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ Win NT 4.0 ➔ Win 2000<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ Win XP ➔ Win 7 ➔ Win 10<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ <strong>Windows 11 &amp; Win Server</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Pohon Genealogi · Sistem Operasi Dunia</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Perhatikan bagan silsilah ini. Banyak orang tidak menyadari bahwa macOS di laptop MacBook dan iOS di iPhone sebenarnya adalah turunan langsung dari keluarga BSD UNIX!</p>
+      <p>Sementara itu, Windows memiliki dua jalur sejarah: jalur DOS lama yang sudah punah (Windows 95/98), dan jalur Windows NT yang menjadi fondasi Windows 10, 11, dan Windows Server hari ini.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 26: LATIHAN SOAL INTERAKTIF (SOAL 1 & 2)
+       ========================================================= -->
+  <section class="slide" data-title="Kuis Interaktif: Soal 1 &amp; 2">
+    <p class="kicker" data-anim="fade-down"><span>📝</span> Uji Pemahaman Interaktif · Klik Opsi Pilihan</p>
+    <h2 class="h2" data-anim="fade-up">Latihan Soal Sistem Operasi (Bagian 1)</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:6px;">
+      <!-- Soal 1 -->
+      <div class="card-clean quiz-card" data-quiz="q1" data-anim="fade-right">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span class="pill-clean">PERTANYAAN 1 · SEJARAH GUI</span>
+          <span style="font-size:14px;color:var(--text-3);">Pilih salah satu (A-E)</span>
+        </div>
+        <p style="font-size:19px;font-weight:700;margin-bottom:10px;color:var(--text-1);line-height:1.4;">
+          Sistem operasi apa yang diluncurkan oleh Apple pada tahun 1984 yang memperkenalkan antarmuka pengguna grafis (GUI) yang inovatif ke publik?
+        </p>
+
+        <div class="quiz-options">
+          <button type="button" class="quiz-opt" data-opt="a" onclick="checkQuiz('q1','a',false)">
+            <span class="opt-badge">A</span>
+            <span class="opt-text">Windows</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" data-opt="b" onclick="checkQuiz('q1','b',false)">
+            <span class="opt-badge">B</span>
+            <span class="opt-text">MS-DOS</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" data-opt="c" onclick="checkQuiz('q1','c',false)">
+            <span class="opt-badge">C</span>
+            <span class="opt-text">UNIX</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" data-opt="d" onclick="checkQuiz('q1','d',true)">
+            <span class="opt-badge">D</span>
+            <span class="opt-text">Macintosh</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" data-opt="e" onclick="checkQuiz('q1','e',false)">
+            <span class="opt-badge">E</span>
+            <span class="opt-text">Linux</span>
+            <span class="opt-status"></span>
+          </button>
+        </div>
+
+        <div class="quiz-feedback"></div>
+
+        <div class="quiz-explanation">
+          <strong style="color:var(--good);display:block;margin-bottom:4px;">💡 Pembahasan Ilmiah:</strong>
+          <strong>Apple Macintosh (1984)</strong> adalah komputer personal pertama yang sukses secara komersial membawa desktop GUI berbasis mouse dan windowing system. Microsoft Windows baru meluncurkan Windows 1.0 pada akhir tahun 1985 sebagai shell tambahan di atas MS-DOS.
+        </div>
+      </div>
+
+      <!-- Soal 2 -->
+      <div class="card-clean accent-card quiz-card" data-quiz="q2" data-anim="fade-left">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span class="pill-clean">PERTANYAAN 2 · SERVER OS</span>
+          <span style="font-size:14px;color:var(--text-3);">Pilih salah satu (A-E)</span>
+        </div>
+        <p style="font-size:19px;font-weight:700;margin-bottom:10px;color:var(--text-1);line-height:1.4;">
+          Sistem operasi apa yang sangat dominan pada server, dikenal karena stabilitas dan keamanannya, dengan distribusi seperti CentOS, RHEL, dan Ubuntu Server?
+        </p>
+
+        <div class="quiz-options">
+          <button type="button" class="quiz-opt" data-opt="a" onclick="checkQuiz('q2','a',false)">
+            <span class="opt-badge">A</span>
+            <span class="opt-text">Windows</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" data-opt="b" onclick="checkQuiz('q2','b',false)">
+            <span class="opt-badge">B</span>
+            <span class="opt-text">MacOS</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" data-opt="c" onclick="checkQuiz('q2','c',true)">
+            <span class="opt-badge">C</span>
+            <span class="opt-text">Linux</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" data-opt="d" onclick="checkQuiz('q2','d',false)">
+            <span class="opt-badge">D</span>
+            <span class="opt-text">iOS</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" data-opt="e" onclick="checkQuiz('q2','e',false)">
+            <span class="opt-badge">E</span>
+            <span class="opt-text">Android</span>
+            <span class="opt-status"></span>
+          </button>
+        </div>
+
+        <div class="quiz-feedback"></div>
+
+        <div class="quiz-explanation">
+          <strong style="color:var(--good);display:block;margin-bottom:4px;">💡 Pembahasan Ilmiah:</strong>
+          <strong>Linux</strong> menguasai lebih dari 90% infrastruktur server cloud dan web dunia. Keunggulannya meliputi lisensi open-source bebas royalti, kestabilan kernel tingkat tinggi (uptime bertahun-tahun tanpa reboot), dan kemampuan berjalan efisien tanpa display server GUI (*headless*).
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Evaluasi Mandiri · Soal 1 &amp; 2 (Interaktif)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Ajak mahasiswa untuk menunjuk salah satu pilihan atau minta salah seorang mahasiswa maju ke depan proyektor untuk mengklik opsi yang mereka yakini benar.</p>
+      <p>Jika salah, tombol akan bergetar dan berubah merah dengan pesan mencoba lagi. Begitu benar, kotak pembahasan ilmiah akan otomatis terbuka.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 27: LATIHAN SOAL INTERAKTIF (SOAL 3, 4, & 5)
+       ========================================================= -->
+  <section class="slide" data-title="Kuis Interaktif: Soal 3, 4, &amp; 5">
+    <p class="kicker" data-anim="fade-down"><span>📝</span> Uji Pemahaman Interaktif · Klik Opsi Pilihan</p>
+    <h2 class="h2" data-anim="fade-up">Latihan Soal Sistem Operasi (Bagian 2)</h2>
+
+    <div class="grid g3" style="gap:22px;margin-top:6px;">
+      <!-- Soal 3 -->
+      <div class="card-clean quiz-card" data-quiz="q3" data-anim="zoom-pop">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span class="pill-clean" style="font-size:13px;">SOAL 3 · LINUX</span>
+          <span style="font-size:13px;color:var(--text-3);">Pilih (A-E)</span>
+        </div>
+        <p style="font-size:17px;font-weight:700;margin-bottom:8px;color:var(--text-1);line-height:1.35;">
+          Siapa yang mengembangkan kernel Linux pada awal 1990-an yang menjadi dasar berbagai distribusi?
+        </p>
+
+        <div class="quiz-options" style="gap:8px;">
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="a" onclick="checkQuiz('q3','a',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">A</span>
+            <span class="opt-text">Bill Gates</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="b" onclick="checkQuiz('q3','b',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">B</span>
+            <span class="opt-text">Steve Jobs</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="c" onclick="checkQuiz('q3','c',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">C</span>
+            <span class="opt-text">Ken Thompson</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="d" onclick="checkQuiz('q3','d',true)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">D</span>
+            <span class="opt-text">Linus Torvalds</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="e" onclick="checkQuiz('q3','e',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">E</span>
+            <span class="opt-text">Richard Stallman</span>
+            <span class="opt-status"></span>
+          </button>
+        </div>
+
+        <div class="quiz-feedback"></div>
+
+        <div class="quiz-explanation" style="font-size:15px;padding:10px 14px;">
+          <strong style="color:var(--good);display:block;margin-bottom:2px;">💡 Pembahasan:</strong>
+          <strong>Linus Torvalds</strong> merilis kernel Linux v0.01 pada tahun 1991 dari University of Helsinki. Richard Stallman adalah pendiri Free Software Foundation (FSF) &amp; proyek GNU.
+        </div>
+      </div>
+
+      <!-- Soal 4 -->
+      <div class="card-clean purple-card quiz-card" data-quiz="q4" data-anim="zoom-pop" style="animation-delay:0.1s;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span class="pill-clean purple" style="font-size:13px;">SOAL 4 · MOBILE OS</span>
+          <span style="font-size:13px;color:var(--text-3);">Pilih (A-E)</span>
+        </div>
+        <p style="font-size:17px;font-weight:700;margin-bottom:8px;color:var(--text-1);line-height:1.35;">
+          Sistem operasi mobile apa yang dikembangkan oleh Google dan berbasis kernel Linux?
+        </p>
+
+        <div class="quiz-options" style="gap:8px;">
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="a" onclick="checkQuiz('q4','a',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">A</span>
+            <span class="opt-text">iOS</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="b" onclick="checkQuiz('q4','b',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">B</span>
+            <span class="opt-text">Windows Phone</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="c" onclick="checkQuiz('q4','c',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">C</span>
+            <span class="opt-text">BlackBerry OS</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="d" onclick="checkQuiz('q4','d',true)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">D</span>
+            <span class="opt-text">Android</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="e" onclick="checkQuiz('q4','e',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">E</span>
+            <span class="opt-text">Symbian</span>
+            <span class="opt-status"></span>
+          </button>
+        </div>
+
+        <div class="quiz-feedback"></div>
+
+        <div class="quiz-explanation" style="font-size:15px;padding:10px 14px;">
+          <strong style="color:var(--good);display:block;margin-bottom:2px;">💡 Pembahasan:</strong>
+          <strong>Android</strong> dirilis Google berbasis kernel Linux modifikasi khusus yang menangani driver hardware, proteksi memori, layar sentuh, dan manajemen daya baterai hemat.
+        </div>
+      </div>
+
+      <!-- Soal 5 -->
+      <div class="card-clean good-card quiz-card" data-quiz="q5" data-anim="zoom-pop" style="animation-delay:0.2s;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span class="pill-clean emerald" style="font-size:13px;">SOAL 5 · RTOS</span>
+          <span style="font-size:13px;color:var(--text-3);">Pilih (A-E)</span>
+        </div>
+        <p style="font-size:17px;font-weight:700;margin-bottom:8px;color:var(--text-1);line-height:1.35;">
+          Sistem operasi real-time mikrokernel yang digunakan dalam sistem kedirgantaraan (aerospace)?
+        </p>
+
+        <div class="quiz-options" style="gap:8px;">
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="a" onclick="checkQuiz('q5','a',true)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">A</span>
+            <span class="opt-text">VxWorks / QNX</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="b" onclick="checkQuiz('q5','b',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">B</span>
+            <span class="opt-text">FreeRTOS</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="c" onclick="checkQuiz('q5','c',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">C</span>
+            <span class="opt-text">Android</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="d" onclick="checkQuiz('q5','d',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">D</span>
+            <span class="opt-text">Windows</span>
+            <span class="opt-status"></span>
+          </button>
+          <button type="button" class="quiz-opt" style="padding:8px 12px;font-size:15px;" data-opt="e" onclick="checkQuiz('q5','e',false)">
+            <span class="opt-badge" style="width:24px;height:24px;font-size:13px;">E</span>
+            <span class="opt-text">MacOS</span>
+            <span class="opt-status"></span>
+          </button>
+        </div>
+
+        <div class="quiz-feedback"></div>
+
+        <div class="quiz-explanation" style="font-size:15px;padding:10px 14px;">
+          <strong style="color:var(--good);display:block;margin-bottom:2px;">💡 Pembahasan:</strong>
+          <strong>VxWorks</strong> adalah Hard RTOS berbasis mikrokernel yang digunakan oleh NASA pada robot Mars Pathfinder &amp; Curiosity berkat jaminan latensi interupsi deterministiknya.
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Evaluasi Mandiri · Soal 3, 4, &amp; 5 (Interaktif)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Ketiga soal ini dapat dicoba oleh tiga mahasiswa berbeda. Interaksi klik langsung memberikan visual feedback instan yang sangat memancing keterlibatan aktif di ruang kelas.</p>
+    </div>
+  </section>
+
+<!-- =========================================================
+       SLIDE 28: KESIMPULAN & INTISARI MATERI
+       ========================================================= -->
+  <section class="slide" data-title="Kesimpulan & Intisari Materi">
+    <p class="kicker" data-anim="fade-down"><span>📌</span> Sintesis Perkuliahan</p>
+    <h2 class="h2" data-anim="fade-up">Intisari Fundamental Pertemuan 1</h2>
+
+    <div class="grid g2" style="gap:28px;margin-top:10px;">
+      <div class="card-clean accent-card" data-anim="fade-right">
+        <h3 class="h3" style="color:var(--accent);">1. Pengelola &amp; Abstraktor Hardware</h3>
+        <p style="font-size:18px;margin-bottom:14px;">
+          Sistem operasi bertindak sebagai jembatan tak terlihat yang mengabstraksi kerumitan register fisik elektronik menjadi antarmuka pemanggilan sistem yang konsisten (Extended Machine) dan mengalokasikan sumber daya komputasi secara adil (Resource Manager).
+        </p>
+        <h3 class="h3" style="color:var(--accent);margin-top:18px;">2. Lima Fungsi Esensial</h3>
+        <p style="font-size:18px;margin:0;">
+          Seluruh OS modern ditopang oleh 5 pilar manajerial utama: Manajemen Proses (CPU), Manajemen Memori (RAM &amp; Virtual Memory), Sistem Berkas (Penyimpanan Persisten), Sub-sistem I/O, serta Mekanisme Proteksi &amp; Keamanan.
+        </p>
+      </div>
+
+      <div class="card-clean good-card" data-anim="fade-left">
+        <h3 class="h3" style="color:var(--good);">3. Proteksi Dual-Mode &amp; Kernel</h3>
+        <p style="font-size:18px;margin-bottom:14px;">
+          Pemisahan User Mode (Ring 3) dan Kernel Mode (Ring 0) melalui System Call menjamin bahwa kegagalan satu program aplikasi tidak akan meruntuhkan keseluruhan sistem komputer.
+        </p>
+        <h3 class="h3" style="color:var(--good);margin-top:18px;">4. Relevansi Proyek Nyata</h3>
+        <p style="font-size:18px;margin:0;">
+          Evolusi dari era batch card ke era cloud membuktikan supremasi kernel Linux. Penguasaan Linux yang akan kita praktikkan adalah keterampilan inti yang langsung dicari di industri rekayasa perangkat lunak dan DevOps.
+        </p>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Kesimpulan Perkuliahan · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Sebagai rangkuman penutup: Sistem Operasi adalah roh penggerak komputer modern.</p>
+      <p>Pastikan mahasiswa memahami bahwa teori yang kita pelajari hari ini bukan sekadar hafalan konseptual, melainkan cara kerja komputer sesungguhnya yang akan mereka sentuh di terminal Linux mulai minggu-minggu berikutnya.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 29: ACTION PLAN & PERSIAPAN PRAKTIKUM
+       ========================================================= -->
+  <section class="slide" data-title="Action Plan & Persiapan Pekan Depan">
+    <p class="kicker" data-anim="fade-down"><span>🚀</span> Tindak Lanjut Mahasiswa</p>
+    <h2 class="h2" data-anim="fade-up">Action Plan: Persiapan Pekan Ini &amp; Pertemuan 2</h2>
+
+    <div class="grid g4" style="gap:22px;margin-top:16px;">
+      <div class="card-clean accent-card" data-anim="zoom-pop">
+        <span class="stat-clean">01</span>
+        <h3 class="h3">Bentuk Tim PBL</h3>
+        <p style="font-size:18px;">Tentukan kelompok Anda pekan ini. Maksimal <strong>3 mahasiswa</strong> per kelompok, pilih ketua dan pembagian peran.</p>
+      </div>
+
+      <div class="card-clean purple-card" data-anim="zoom-pop" style="animation-delay:0.1s;">
+        <span class="stat-clean" style="color:var(--purple);">02</span>
+        <h3 class="h3">Install VirtualBox</h3>
+        <p style="font-size:18px;">Unduh dan pasang aplikasi virtualisasi <strong>Oracle VM VirtualBox</strong> atau VMware Player pada laptop masing-masing.</p>
+      </div>
+
+      <div class="card-clean warn-card" data-anim="zoom-pop" style="animation-delay:0.2s;">
+        <span class="stat-clean" style="color:var(--warn);">03</span>
+        <h3 class="h3">Download ISO Linux</h3>
+        <p style="font-size:18px;">Siapkan installer berkas citra ISO <strong>Ubuntu Server 22.04 / 24.04 LTS</strong> atau Rocky Linux 9 (x86_64 minimal).</p>
+      </div>
+
+      <div class="card-clean good-card" data-anim="zoom-pop" style="animation-delay:0.3s;">
+        <span class="stat-clean" style="color:var(--good);">04</span>
+        <h3 class="h3">Pelajari RTM</h3>
+        <p style="font-size:18px;">Baca dokumen RTM, catat portal <code style="font-weight:700;">s.id/SOUBSI</code>, serta format email tugas ke <code style="font-weight:700;">dany.dto@bsi.ac.id</code>.</p>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Action Plan Pekan Ini · Sistem Operasi (328)</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Tegaskan action item yang harus diselesaikan mahasiswa sebelum masuk ke Pertemuan 2.</p>
+      <p>Pekan depan di Pertemuan 2 kita akan membedah topik Struktur Proses dan Komunikasi Antar Proses (IPC) lebih mendalam, sebelum masuk ke sesi praktikum terminal.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 30: PENUTUP & QNA
+       ========================================================= -->
+  <section class="slide" data-title="Penutup & Tanya Jawab">
+    <div style="margin-top:60px;text-align:center;">
+      <p class="kicker" data-anim="fade-down" style="justify-content:center;"><span>💬</span> Sesi Diskusi &amp; Tanya Jawab</p>
+      <h1 class="h1" data-anim="rise-in" style="font-size:60px!important;margin:12px 0 20px 0!important;">
+        Terima Kasih &amp; Ada Pertanyaan?
+      </h1>
+      <p class="lede" data-anim="fade-up" style="max-width:56ch;margin:0 auto 36px auto;">
+        "Talk is cheap. Show me the code."<br>
+        <span style="font-size:19px;color:var(--text-3);font-style:italic;">— Linus Torvalds, Pencipta Kernel Linux &amp; Git</span>
+      </p>
+
+      <div class="card-clean" data-anim="zoom-pop" style="display:inline-block;padding:22px 36px;text-align:left;background:#f8fafc;max-width:850px;">
+        <span style="font-size:17px;font-weight:700;color:var(--text-1);display:block;margin-bottom:8px;">
+          ⌨️ Panduan Pintasan Keyboard Presenter:
+        </span>
+        <span style="font-size:16px;color:var(--text-2);line-height:1.8;">
+          <kbd>→</kbd> / <kbd>Space</kbd> : Slide Berikutnya &nbsp;|&nbsp;
+          <kbd>←</kbd> : Slide Sebelumnya &nbsp;|&nbsp;
+          <kbd>S</kbd> : <strong>Mode Presenter</strong> (Layar Ganda + Script Dosen) &nbsp;|&nbsp;
+          <kbd>T</kbd> : Ganti Tema &nbsp;|&nbsp;
+          <kbd>O</kbd> : Overview Grid &nbsp;|&nbsp;
+          <kbd>F</kbd> : Fullscreen
+        </span>
+      </div>
+
+      <div style="margin-top:28px;display:flex;align-items:center;justify-content:center;gap:12px;">
+        <div style="background:#ffffff;border:1.5px solid var(--border);padding:10px 28px;border-radius:9999px;display:inline-flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+          <span style="font-size:22px;">👨‍🏫</span>
+          <div style="text-align:left;">
+            <span style="font-size:12px;color:var(--text-3);text-transform:uppercase;font-weight:600;display:block;">Dosen Pengampu Mata Kuliah:</span>
+            <span style="font-size:18px;color:var(--text-1);font-weight:800;">Dany Pratmanto M.Kom</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span>Sistem Operasi (328) · Program Studi S1 Informatika · Universitas Bina Sarana Informatika</span>
+      <span class="slide-number"></span>
+    </div>
+    <div class="notes">
+      <p>Terima kasih rekan-rekan atas perhatian dan antusiasmenya pada sesi perdana hari ini.</p>
+      <p>Sekarang ruangan kita buka untuk sesi tanya jawab: silakan jika ada yang ingin ditanyakan seputar konsep sistem operasi, arsitektur kernel, maupun teknis pelaksanaan tugas proyek kelompok Web Server Linux.</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Runtime scripts for animations and keyboard control -->
+<script src="/slides/assets/animations/fx-runtime.js"></script>
+<script src="/slides/assets/runtime.js"></script>
+<!-- =========================================================
+     INTERACTIVE QUIZ ENGINE SCRIPT
+     ========================================================= -->
+<script>
+window.checkQuiz = function(quizId, selectedOpt, isCorrect) {
+  var container = document.querySelector('[data-quiz="' + quizId + '"]');
+  if (!container) return;
+  
+  var buttons = container.querySelectorAll('.quiz-opt');
+  var expl = container.querySelector('.quiz-explanation');
+  var feedback = container.querySelector('.quiz-feedback');
+  
+  if (isCorrect) {
+    buttons.forEach(function(btn) {
+      btn.disabled = true;
+      btn.style.cursor = 'default';
+      btn.style.transform = 'none';
+      if (btn.getAttribute('data-opt') === selectedOpt) {
+        btn.classList.remove('opt-wrong');
+        btn.classList.add('opt-correct');
+        var status = btn.querySelector('.opt-status');
+        if (status) status.innerHTML = '<span style="color:#059669;background:#ecfdf5;padding:3px 8px;border-radius:6px;border:1px solid #a7f3d0;">✅ BENAR!</span>';
+      }
+    });
+    if (expl) expl.style.display = 'block';
+    if (feedback) {
+      feedback.innerHTML = '<div style="display:inline-flex;align-items:center;gap:6px;color:#059669;font-weight:700;font-size:16px;background:#ecfdf5;padding:6px 14px;border-radius:8px;border:1px solid #a7f3d0;"><span>🎉 Jawaban BENAR!</span></div><button type="button" class="quiz-reset-btn" onclick="resetQuiz(\'' + quizId + '\')">🔄 Reset Soal</button>';
+    }
+  } else {
+    buttons.forEach(function(btn) {
+      if (btn.getAttribute('data-opt') === selectedOpt) {
+        btn.classList.add('opt-wrong');
+        var status = btn.querySelector('.opt-status');
+        if (status) status.innerHTML = '<span style="color:#dc2626;background:#fef2f2;padding:3px 8px;border-radius:6px;border:1px solid #fecaca;">❌ SALAH</span>';
+      }
+    });
+    if (feedback) {
+      feedback.innerHTML = '<div style="display:inline-flex;align-items:center;gap:6px;color:#dc2626;font-weight:700;font-size:15px;background:#fef2f2;padding:6px 14px;border-radius:8px;border:1px solid #fecaca;"><span>❌ Jawaban SALAH!</span> <span style="font-weight:500;color:#991b1b;font-size:14px;">Silakan pilih opsi yang lain.</span></div>';
+    }
+  }
+};
+
+window.resetQuiz = function(quizId) {
+  var container = document.querySelector('[data-quiz="' + quizId + '"]');
+  if (!container) return;
+  var buttons = container.querySelectorAll('.quiz-opt');
+  buttons.forEach(function(btn) {
+    btn.disabled = false;
+    btn.className = 'quiz-opt';
+    btn.style.cursor = 'pointer';
+    btn.style.transform = '';
+    var status = btn.querySelector('.opt-status');
+    if (status) status.innerHTML = '';
+  });
+  var expl = container.querySelector('.quiz-explanation');
+  if (expl) expl.style.display = 'none';
+  var feedback = container.querySelector('.quiz-feedback');
+  if (feedback) feedback.innerHTML = '';
+};
+</script>
+
+</body>
+</html>

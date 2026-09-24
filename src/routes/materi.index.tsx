@@ -41,7 +41,11 @@ function MaterialsPage() {
         ]
           .join(" ")
           .toLowerCase();
-        const typeMatch = type === "Semua" || course.sessions.some((s) => s.type === type);
+        const typeMatch =
+          type === "Semua" ||
+          course.sessions.some(
+            (s) => s.type === type || (type === "PPT" && s.type === "Slide Interaktif"),
+          );
         return haystack.includes(query.toLowerCase()) && typeMatch;
       }),
     [query, type],
